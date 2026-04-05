@@ -1,0 +1,4381 @@
+{
+  "name": "chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "jRxEFqxsMIz5yxRh",
+          "mode": "list",
+          "cachedResultName": "products",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/jRxEFqxsMIz5yxRh"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "price": "={{ $node[\"Validate Product\"].json.price }}",
+            "name": "={{ $node[\"Validate Product\"].json.name }}",
+            "description": "={{ $node[\"Validate Product\"].json.description }}",
+            "image_url_1": "={{ $node[\"Collect S3 URLs\"].json.image_url_1 || '' }}",
+            "image_url_2": "={{ $node[\"Collect S3 URLs\"].json.image_url_2 || '' }}",
+            "image_url_3": "={{ $node[\"Collect S3 URLs\"].json.image_url_3 || '' }}",
+            "image_url_4": "={{ $node[\"Collect S3 URLs\"].json.image_url_4 || '' }}",
+            "user_id": "={{ $json.user_id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "currency",
+              "displayName": "currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "image_url_1",
+              "displayName": "image_url_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "image_url_2",
+              "displayName": "image_url_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "image_url_3",
+              "displayName": "image_url_3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "image_url_4",
+              "displayName": "image_url_4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        960
+      ],
+      "name": "Upsert row(s)1",
+      "id": "7d9aaadf-4fae-46e0-94bf-349581bb600a",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -768,
+        176
+      ],
+      "id": "8f793f90-44d6-41e0-a0a9-6218a92f36ff",
+      "name": "Respond to Webhook",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "path": "Respond immediately",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1456,
+        176
+      ],
+      "id": "1d167f22-5ab8-42d9-937e-10c8df3ad6ca",
+      "name": "Trigger",
+      "webhookId": "c4075913-3699-4a96-8e42-fe6154a45e44",
+      "executeOnce": false,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "jRxEFqxsMIz5yxRh",
+          "mode": "list",
+          "cachedResultName": "products",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/jRxEFqxsMIz5yxRh"
+        }
+      },
+      "name": "Fetch Products",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -944,
+        176
+      ],
+      "id": "c0927070-5eab-4a9c-9f1f-d39110c9c9f9",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "jRxEFqxsMIz5yxRh",
+          "mode": "list",
+          "cachedResultName": "products",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/jRxEFqxsMIz5yxRh"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $json.body.product_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Fetch Products1",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -1088,
+        768
+      ],
+      "id": "adde8f72-58d8-4f34-8319-f2857ee2a739"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"message\": \"تم حذف المنتج بنجاح\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -480,
+        768
+      ],
+      "id": "bc5ae728-c6e8-41d3-ac6a-63789d76cdac",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "jRxEFqxsMIz5yxRh",
+          "mode": "list",
+          "cachedResultName": "products",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/jRxEFqxsMIz5yxRh"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $node[\"Code\"].json.product_id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "price": "={{ $node[\"Code\"].json.price }}",
+            "name": "={{ $node[\"Code\"].json.name }}",
+            "description": "={{ $node[\"Code\"].json.description }}",
+            "image_url_1": "={{ $node[\"Collect S3 URLs1\"].json.image_url_1 }}\n",
+            "image_url_2": "={{ $node[\"Collect S3 URLs1\"].json.image_url_2 }}\n",
+            "image_url_3": "={{ $node[\"Collect S3 URLs1\"].json.image_url_3 }}\n",
+            "image_url_4": "={{ $node[\"Collect S3 URLs1\"].json.image_url_4 }}\n"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "currency",
+              "displayName": "currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "image_url_1",
+              "displayName": "image_url_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "image_url_2",
+              "displayName": "image_url_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "image_url_3",
+              "displayName": "image_url_3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "image_url_4",
+              "displayName": "image_url_4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "name": "Fetch Products2",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        272,
+        448
+      ],
+      "id": "890be424-c094-4b95-bdde-73a83fe48a71"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"message\": \"تم تعديل المنتج بنجاح ✅\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        624,
+        448
+      ],
+      "id": "23ce0a16-2227-463b-8d46-c4b639188883",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "update-product",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2240,
+        464
+      ],
+      "id": "efcad28a-3139-4070-9d15-838fa5a530b4",
+      "name": "update-product",
+      "webhookId": "ecd10a8d-4711-44ab-91db-70282e8203b0"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "add-product",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, POST, PUT, DELETE, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization, X-Requested-With"
+              },
+              {
+                "name": "Access-Control-Max-Age",
+                "value": "86400"
+              },
+              {
+                "name": "Access-Control-Allow-Credentials",
+                "value": "false"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1744,
+        960
+      ],
+      "id": "e6c312ea-9c86-4ecd-b494-2f917d18915d",
+      "name": "add-product",
+      "webhookId": "f659b3e1-7690-4a70-96e1-96a2a3c29090"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"message\": \"✅ تمت الإضافة بنجاح\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -416,
+        960
+      ],
+      "id": "9c5c9bd2-8d15-4424-81b0-bbf84ff1a3d7",
+      "name": "Respond to Webhook3"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "delete-product",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1344,
+        768
+      ],
+      "id": "46a89407-fb32-42ab-8131-1eec1791db6a",
+      "name": "delete-product",
+      "webhookId": "ecd10a8d-4711-44ab-91db-70282e8203b0"
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "te-kamul-products-eu-central-1-1248",
+        "fileName": "={{ $json.fileName }}",
+        "binaryPropertyName": "image",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.awsS3",
+      "typeVersion": 2,
+      "position": [
+        -1184,
+        960
+      ],
+      "id": "9dc8aa08-c943-43d3-8c0b-5e48fe828666",
+      "name": "Upload a file",
+      "credentials": {
+        "aws": {
+          "id": "zLqQRjKbHOyfCg4J",
+          "name": "AWS (IAM) account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// const data = $json.body || $json;\n\n// const errors = [];\n\n// if (!data.name) errors.push(\"الاسم مفقود\");\n// if (!data.description) errors.push(\"الوصف مفقود\");\n// if (!data.image_base64_1) errors.push(\"الصورة الأولى مفقودة\");\n\n// if (data.price === undefined || data.price === null) {\n//   errors.push(\"السعر مفقود\");\n// } else if (isNaN(Number(data.price))) {\n//   errors.push(\"السعر يجب أن يكون رقم\");\n// }\n\n// if (errors.length > 0) {\n//   throw new Error(errors.join(\", \"));\n// }\n\n// // معالجة الصور المتعددة\n// const images = [];\n// const timestamp = Date.now();\n\n// for (let i = 1; i <= 4; i++) {\n//   const imageKey = `image_base64_${i}`;\n//   if (data[imageKey]) {\n//     const base64Data = data[imageKey].split(',')[1];\n//     const imageBuffer = Buffer.from(base64Data, 'base64');\n//     const fileName = `products/${timestamp}_image_${i}_${data[`image_name_${i}`] || `image${i}.jpg`}`;\n//     const mimeType = data[imageKey].split(';')[0].split(':')[1];\n    \n//     images.push({\n//       index: i,\n//       buffer: imageBuffer,\n//       fileName: fileName,\n//       mimeType: mimeType\n//     });\n//   }\n// }\n\n// if (images.length === 0) {\n//   throw new Error(\"يجب توفير صورة واحدة على الأقل\");\n// }\n\n// return [{\n//   json: {\n//     name: data.name,\n//     description: data.description,\n//     price: Number(data.price),\n//     user_id: data.user_id || 1,\n//     text: `${data.name} - ${data.description}`,\n//     images: images,\n//     totalImages: images.length\n//   }\n// }];\n\nconst data = $json.body || $json;\nconst errors = [];\n\nif (!data.name) errors.push(\"الاسم مفقود\");\nif (!data.description) errors.push(\"الوصف مفقود\");\n\n// Check if images array exists and has at least one image\nif (!data.images || !Array.isArray(data.images) || data.images.length === 0) {\n  errors.push(\"الصورة الأولى مفقودة\");\n}\n\nif (data.price === undefined || data.price === null) {\n  errors.push(\"السعر مفقود\");\n} else if (isNaN(Number(data.price))) {\n  errors.push(\"السعر يجب أن يكون رقم\");\n}\n\nif (errors.length > 0) {\n  throw new Error(errors.join(\", \"));\n}\n\n// Process multiple images from array\nconst images = [];\nconst timestamp = Date.now();\n\ndata.images.forEach((image, index) => {\n  if (image.base64) {\n    const base64Data = image.base64.includes(',') ? image.base64.split(',')[1] : image.base64;\n    const imageBuffer = Buffer.from(base64Data, 'base64');\n    const fileName = `products/${timestamp}_image_${index + 1}_${image.name || `image${index + 1}.jpg`}`;\n    const mimeType = image.base64.includes(';') ? image.base64.split(';')[0].split(':')[1] : 'image/jpeg';\n    \n    images.push({\n      index: index + 1,\n      buffer: imageBuffer,\n      fileName: fileName,\n      mimeType: mimeType\n    });\n  }\n});\n\nif (images.length === 0) {\n  throw new Error(\"يجب توفير صورة واحدة على الأقل\");\n}\n\nreturn [{\n  json: {\n    name: data.name,\n    description: data.description,\n    price: Number(data.price),\n    user_id: data.user_id || 1,\n    text: `${data.name} - ${data.description}`,\n    images: images,\n    totalImages: images.length\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1568,
+        960
+      ],
+      "name": "Validate Product",
+      "id": "d27611bc-b4d3-4d9b-8ca0-6a9343dace69",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const bucketName = 'te-kamul-products-eu-central-1-1248';\nconst region = 'eu-central-1';\n\n// محاولة الحصول على الاسم من مخرجات S3، وإذا فشل نجلبه من النود السابق Loop Images\nconst fileName = $json.Key || $('Loop Images').item.json.fileName;\n\nif (!fileName) {\n  throw new Error('⚠️ لم يتم العثور على fileName في البيانات المُدخلة أو النود السابق');\n}\n\nconst s3Url = `https://${bucketName}.s3.${region}.amazonaws.com/${fileName}`;\n\nreturn {\n  json: {\n    imageIndex: $('Loop Images').item.json.imageIndex, // استرجاع الفهرس من النود الأصلي\n    image_url: s3Url,\n    fileName: fileName,\n    name: $('Loop Images').item.json.name,\n    description: $('Loop Images').item.json.description,\n    price: $('Loop Images').item.json.price,\n    user_id: $('Loop Images').item.json.user_id\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1008,
+        960
+      ],
+      "id": "2a3b6135-3b19-4030-8ca1-a2b9a91042cf",
+      "name": "Get S3 URL",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "functionCode": "// n8n Function Node - Render HTML\n\nconst rows = $input.all();\nlet html = '';\n\nhtml += `<!DOCTYPE html>\n<html lang=\"ar\" dir=\"rtl\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\n<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\n\n<style>\nbody{\nfont-family:Tahoma;\nbackground:#f4f6f8;\npadding:15px;\n}\n\nh2{text-align:center;color:#1a5f7a}\n\n.grid{\ndisplay:grid;\ngrid-template-columns:repeat(auto-fill,minmax(260px,1fr));\ngap:15px;\n}\n\n.card{\nbackground:white;\nborder-radius:12px;\npadding:12px;\nbox-shadow:0 4px 8px rgba(0,0,0,.1);\n}\n\n.card img{\nwidth:70px;\nheight:70px;\nborder-radius:6px;\nobject-fit:cover;\nmargin:3px;\n}\n\n.actions{\ndisplay:flex;\ngap:5px;\nmargin-top:8px;\n}\n\n.actions button{\nflex:1;\npadding:6px;\nborder:none;\nborder-radius:6px;\ncursor:pointer;\ncolor:white;\n}\n\n.edit{background:#f59e0b}\n.delete{background:#ef4444}\n\n.add-btn{\nbackground:#22c55e;\ncolor:white;\nborder:none;\npadding:10px 16px;\nborder-radius:8px;\nmargin-bottom:10px;\ncursor:pointer;\n}\n\n.modal{\nposition:fixed;\ntop:0;\nleft:0;\nwidth:100%;\nheight:100%;\nbackground:rgba(0,0,0,.6);\ndisplay:none;\njustify-content:center;\nalign-items:center;\n}\n\n.modal.show{display:flex;}\n\n.modal-box{\nbackground:white;\npadding:20px;\nwidth:350px;\nborder-radius:12px;\n}\n\n.modal-box h3{\ntext-align:center;\nmargin-bottom:10px;\n}\n\n.form-group{\nmargin-bottom:10px;\n}\n\n.form-group input,\n.form-group textarea{\nwidth:100%;\npadding:8px;\nborder-radius:6px;\nborder:1px solid #ccc;\n}\n\n.upload-box{\nborder:2px dashed #1a5f7a;\npadding:12px;\nborder-radius:8px;\ntext-align:center;\ncursor:pointer;\ncolor:#1a5f7a;\n}\n\n.preview{\ndisplay:flex;\nflex-wrap:wrap;\ngap:5px;\nmargin-top:8px;\n}\n\n.preview img{\nwidth:60px;\nheight:60px;\nborder-radius:6px;\nobject-fit:cover;\n}\n\n.save-btn{\nbackground:#22c55e;\ncolor:white;\nborder:none;\npadding:10px;\nwidth:100%;\nborder-radius:6px;\nmargin-top:8px;\n}\n\n.cancel-btn{\nbackground:#ef4444;\ncolor:white;\nborder:none;\npadding:10px;\nwidth:100%;\nborder-radius:6px;\nmargin-top:6px;\n}\n</style>\n</head>\n\n<body>\n\n<h2>📦 إدارة المنتجات</h2>\n<button class=\"add-btn\" onclick=\"openModal()\">➕ إضافة منتج</button>\n\n<div class=\"grid\">\n`;\n\nfor (const p of rows) {\n  const d = p.json;\n  const name = (d.name || '').replace(/'/g,\"&#39;\");\n  const desc = (d.description || '').replace(/'/g,\"&#39;\");\n  const price = d.price || 0;\n  const id = d.id;\n\n  const imgs = [];\n  if(d.image_url_1) imgs.push(d.image_url_1);\n  if(d.image_url_2) imgs.push(d.image_url_2);\n  if(d.image_url_3) imgs.push(d.image_url_3);\n  if(d.image_url_4) imgs.push(d.image_url_4);\n\n  html += `<div class=\"card\">\n<h4>${name}</h4>\n<p>${desc}</p>\n<b>${price} دينار</b>\n<div>`;\n  imgs.forEach(i=>{\n    html += `<img src=\"${i}\">`;\n  });\n  html += `</div>\n\n<div class=\"actions\">\n<button class=\"edit\" onclick=\"editProduct(${id},'${name}','${desc}',${price})\">✏️ تعديل</button>\n<button class=\"delete\" onclick=\"deleteProduct(${id})\">🗑 حذف</button>\n</div>\n</div>`;\n}\n\nhtml += `</div>\n\n<div class=\"modal\" id=\"modal\">\n<div class=\"modal-box\">\n\n<h3 id=\"title\">إضافة منتج</h3>\n<input type=\"hidden\" id=\"pid\">\n\n<div class=\"form-group\">\n<input id=\"name\" placeholder=\"اسم المنتج\">\n</div>\n\n<div class=\"form-group\">\n<textarea id=\"desc\" placeholder=\"الوصف\"></textarea>\n</div>\n\n<div class=\"form-group\">\n<input id=\"price\" type=\"number\" placeholder=\"السعر\">\n</div>\n\n<div class=\"form-group\">\n<div class=\"upload-box\" onclick=\"document.getElementById('images').click()\">\n<i class=\"fa fa-cloud-upload\"></i> رفع صور\n</div>\n<input type=\"file\" id=\"images\" multiple accept=\"image/*\" hidden>\n<div class=\"preview\" id=\"preview\"></div>\n</div>\n\n<button class=\"save-btn\" onclick=\"save()\">💾 حفظ</button>\n<button class=\"cancel-btn\" onclick=\"closeModal()\">❌ إلغاء</button>\n\n</div>\n</div>\n\n<script>\n\nlet selectedImages=[];\n\nfunction openModal(){\n document.getElementById(\"modal\").classList.add(\"show\");\n reset();\n}\n\nfunction closeModal(){\n document.getElementById(\"modal\").classList.remove(\"show\");\n}\n\nfunction reset(){\n document.getElementById(\"pid\").value=\"\";\n document.getElementById(\"name\").value=\"\";\n document.getElementById(\"desc\").value=\"\";\n document.getElementById(\"price\").value=\"\";\n document.getElementById(\"preview\").innerHTML=\"\";\n selectedImages=[];\n}\n\ndocument.getElementById(\"images\").addEventListener(\"change\",function(){\n selectedImages=[...this.files];\n const preview=document.getElementById(\"preview\");\n preview.innerHTML=\"\";\n selectedImages.forEach(file=>{\n  const r=new FileReader();\n  r.onload=e=>{\n   const img=document.createElement(\"img\");\n   img.src=e.target.result;\n   preview.appendChild(img);\n  }\n  r.readAsDataURL(file);\n });\n});\n\nfunction editProduct(id,name,desc,price){\n openModal();\n document.getElementById(\"title\").innerText=\"تعديل منتج\";\n document.getElementById(\"pid\").value=id;\n document.getElementById(\"name\").value=name;\n document.getElementById(\"desc\").value=desc;\n document.getElementById(\"price\").value=price;\n}\n\nasync function save(){\n const id=document.getElementById(\"pid\").value;\n const name=document.getElementById(\"name\").value;\n const desc=document.getElementById(\"desc\").value;\n const price=document.getElementById(\"price\").value;\n\n let imagesData={};\n\n for(let i=0;i<selectedImages.length;i++){\n  const b64=await toBase64(selectedImages[i]);\n  imagesData[\"image_base64_\"+(i+1)]=b64;\n }\n\n let url=id\n ? \"https://n8n-n8n.17m6co.easypanel.host/webhook/update-product\"\n : \"https://n8n-n8n.17m6co.easypanel.host/webhook/add-product\";\n\n let payload={name,description:desc,price:Number(price),...imagesData};\n if(id) payload.product_id=id;\n\n await fetch(url,{\n  method:\"POST\",\n  headers:{\"Content-Type\":\"application/json\"},\n  body:JSON.stringify(payload)\n });\n\n alert(\"تم الحفظ\");\n location.reload();\n}\n\nfunction deleteProduct(id){\n if(!confirm(\"تأكيد الحذف؟\")) return;\n\n fetch(\"https://n8n-n8n.17m6co.easypanel.host/webhook/delete-product\",{\n  method:\"POST\",\n  headers:{\"Content-Type\":\"application/json\"},\n  body:JSON.stringify({product_id:id})\n }).then(()=>location.reload());\n}\n\nfunction toBase64(file){\n return new Promise((res,rej)=>{\n  const r=new FileReader();\n  r.onload=()=>res(r.result);\n  r.onerror=e=>rej(e);\n  r.readAsDataURL(file);\n });\n}\n\n</script>\n\n</body>\n</html>`;\n\nreturn [{json:{html}}];"
+      },
+      "name": "Render HTML1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -1184,
+        176
+      ],
+      "id": "90bc3407-edc3-48e6-98e7-2e81d6ccc7dc",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $node[\"update-product\"].json.body;\nconst existingProduct = $json;\n\n// ✅ دالة لتنظيف روابط الصور من \\n\nconst cleanUrl = (url) => {\n  if (!url) return \"\";\n  return url.replace(/[\\n\\r\\s]+/g, '').trim();\n};\n\nconsole.log(\"Update request:\", body);\n\nconst images = [];\n\nif (body.images && Array.isArray(body.images) && body.images.length > 0) {\n  // صور جديدة\n  body.images.forEach((img, index) => {\n    if (img.base64 && img.base64.startsWith('data:image')) {\n      images.push({\n        fileName: img.name || `image${index + 1}.jpg`,\n        mimeType: img.mimeType || \"image/jpeg\",\n        base64: img.base64\n      });\n    } else if (img.fileName && img.fileName.startsWith('http')) {\n      images.push({\n        fileName: cleanUrl(img.fileName),  // ✅ تنظيف\n        mimeType: \"image/png\",\n        base64: null\n      });\n    }\n  });\n} else {\n  // ✅ احتفظ بالصور القديمة (منظّفة)\n  for (let i = 1; i <= 4; i++) {\n    const existingUrl = cleanUrl(existingProduct[`image_url_${i}`]);\n    if (existingUrl && existingUrl.startsWith('http')) {\n      images.push({\n        fileName: existingUrl,\n        mimeType: \"image/png\",\n        base64: null\n      });\n    }\n  }\n}\n\nreturn [{\n  json: {\n    product_id: body.product_id,\n    name: body.name,\n    description: body.description,\n    price: body.price,\n    image_url_1: cleanUrl(existingProduct.image_url_1),  // ✅ تنظيف\n    image_url_2: cleanUrl(existingProduct.image_url_2),\n    image_url_3: cleanUrl(existingProduct.image_url_3),\n    image_url_4: cleanUrl(existingProduct.image_url_4),\n    text: `${body.name} - ${body.description}`,\n    images\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1872,
+        464
+      ],
+      "id": "94102586-2073-48a9-8997-1d22ab52670b",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "const validateData = $input.first().json;\nconst images = validateData.images || [];\n\nreturn images.map((img, index) => ({\n  json: {\n    name: validateData.name,\n    description: validateData.description,\n    price: validateData.price,\n    user_id: validateData.user_id,\n    imageIndex: index + 1,\n    fileName: img.fileName,  // ✅ تأكد من هذا السطر\n    mimeType: img.mimeType\n  },\n  binary: {\n    image: {\n      data: img.buffer,\n      mimeType: img.mimeType\n    }\n  }\n}));"
+      },
+      "id": "e4de9a13-e160-48aa-bbc7-cdde9691a3f6",
+      "name": "Loop Images",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1376,
+        960
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const allUploads = $input.all();\nconst validateData = $node[\"Validate Product\"].json;\n\nconst imageUrls = {};\nlet hasImages = false;\n\nfor (const item of allUploads) {\n  const index = item.json.imageIndex;\n  const url = item.json.image_url;\n\n  if (index && url && url.includes('http')) {\n    imageUrls[`image_url_${index}`] = url;\n    hasImages = true;\n  }\n}\n\nif (!hasImages) {\n  throw new Error(\"لم يتم رفع أي صورة بنجاح\");\n}\n\nreturn [{\n  json: {\n    name: validateData.name,\n    description: validateData.description,\n    price: validateData.price,\n    user_id: validateData.user_id,\n    text: validateData.text,\n    ...imageUrls\n  }\n}];\n"
+      },
+      "id": "d48ab651-d5b1-45f4-9267-d85ae9d2b491",
+      "name": "Collect S3 URLs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -832,
+        960
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "te-kamul-products-eu-central-1-1248",
+        "fileName": "={{ $json.fileName }}\n\n\n",
+        "binaryPropertyName": "image",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.awsS3",
+      "typeVersion": 2,
+      "position": [
+        -864,
+        384
+      ],
+      "id": "101f4c9d-7be2-4529-a3fb-089aaf41a3b7",
+      "name": "Upload a file1",
+      "alwaysOutputData": false,
+      "notesInFlow": false,
+      "credentials": {
+        "aws": {
+          "id": "zLqQRjKbHOyfCg4J",
+          "name": "AWS (IAM) account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// const item = $input.item.json;\n// const index = item.imageIndex;\n// const s3Url = item.image_url;\n\n// return {\n//   json: {\n//     ...item,\n//     image_url: s3Url\n//   }\n// };\n// runOnceForAllItems - يجلب البيانات من built-in مباشرة (قبل IF)\nconst bucketName = \"te-kamul-products-eu-central-1-1248\";\nconst region = \"eu-central-1\";\n\n// ✅ استخدم all() - لا يستخدم paired items\nconst originalItems = $('built-in').all();\n\nreturn originalItems.map(item => {\n  const fileName = item.json.fileName;\n  const image_url = `https://${bucketName}.s3.${region}.amazonaws.com/${fileName}`;\n  \n  return {\n    json: {\n      product_id: item.json.product_id,\n      name: item.json.name,\n      description: item.json.description,\n      price: item.json.price,\n      imageIndex: item.json.imageIndex,\n      type: item.json.type,\n      image_url,\n      fileName\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        384
+      ],
+      "id": "79d39598-82c7-4f0c-87dc-8ee2ade458d1",
+      "name": "Get S3 URL1",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst output = [];\n\nitems.forEach((item, index) => {\n  const isNew = item.json.type === \"new\";\n  const imageIndex = index + 1; // ✅ الترتيب الصحيح\n  const fileName = `products/${item.json.product_id}_${Date.now()}_${imageIndex}.jpg`;\n\n  output.push({\n    json: {\n      ...item.json,\n      imageIndex, // ✅ حفظ الترتيب الصحيح\n      fileName,\n      product_id: item.json.product_id // ✅ التأكد من نقل product_id\n    },\n    ...(isNew && item.binary?.image ? { binary: { image: item.binary.image } } : {})\n  });\n});\n\nreturn output;"
+      },
+      "id": "a57dd988-9b02-4d1f-a0dc-6da64ccbf4d7",
+      "name": "Loop Images1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1568,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const allItems = $input.all();\n\n// ✅ أخذ الصور القديمة من \"Fetch Existing Product\" (المنتج الأصلي من قاعدة البيانات)\nconst existingProduct = $(\"Fetch Existing Product\").first().json;\n\n// تنظيف الصور القديمة (إزالة \\n\\n الفارغة)\nconst cleanUrl = (url) => {\n  if (!url || url.trim() === '') return \"\";\n  return url.trim();\n};\n\nconst oldImages = {\n  image_url_1: cleanUrl(existingProduct.image_url_1),\n  image_url_2: cleanUrl(existingProduct.image_url_2),\n  image_url_3: cleanUrl(existingProduct.image_url_3),\n  image_url_4: cleanUrl(existingProduct.image_url_4)\n};\n\nconsole.log(\"Old images from DB:\", oldImages);\n\n// دمج الصور الجديدة (إن وُجدت)\nconst newImages = { ...oldImages };\n\nallItems.forEach(item => {\n  const idx = item.json.imageIndex;\n  const url = item.json.image_url;\n  \n  if (idx && url && typeof url === \"string\" && url.startsWith(\"http\")) {\n    newImages[`image_url_${idx}`] = url;\n    console.log(`✅ Updated image_url_${idx}: ${url}`);\n  }\n});\n\n// الحصول على بيانات المنتج من Code node\nconst productData = $(\"Code\").first().json;\n\nreturn [{\n  json: {\n    product_id: productData.product_id,\n    name: productData.name,\n    description: productData.description,\n    price: productData.price,\n    ...newImages\n  }\n}];"
+      },
+      "id": "88ad914d-ca3d-4744-980c-e0ce4f1db18a",
+      "name": "Collect S3 URLs1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -48,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// const data = $input.first().json;\n// const images = data.images || [];\n\n// if (!Array.isArray(images) || images.length === 0) {\n//   console.log('❌ لا توجد صور في البيانات');\n//   return [];\n// }\n\n// const output = [];\n\n// images.forEach((img, index) => {\n//   // ✅ التحقق الصحيح: هل يوجد base64 في الصورة؟\n//   const isBase64 = img.base64 && img.base64.startsWith('data:image');\n\n//   if (isBase64) {\n//     // ✅ صورة جديدة - تحتاج رفع إلى S3\n//     const base64Data = img.base64.split(',')[1]; // إزالة البادئة data:image/...;base64,\n    \n//     output.push({\n//       json: {\n//         name: data.name,\n//         description: data.description,\n//         price: data.price,\n//         product_id: data.product_id, // ✅ إضافة product_id\n//         imageIndex: index + 1,\n//         fileName: `${data.product_id || 'product'}_${Date.now()}_${index + 1}.jpg`,\n//         mimeType: img.mimeType || 'image/jpeg',\n//         type: 'new' // ✅ تصنيف صحيح\n//       },\n//       binary: {\n//         image: {\n//           data: base64Data,\n//           mimeType: img.mimeType || 'image/jpeg'\n//         }\n//       }\n//     });\n//   } else if (img.fileName && img.fileName.startsWith('http')) {\n//     // ✅ صورة قديمة - رابط موجود مسبقًا\n//     output.push({\n//       json: {\n//         name: data.name,\n//         description: data.description,\n//         price: data.price,\n//         product_id: data.product_id, // ✅ إضافة product_id\n//         imageIndex: index + 1,\n//         image_url: img.fileName, // الرابط القديم\n//         type: 'existing' // ✅ تصنيف صحيح\n//       }\n//     });\n//   } else {\n//     console.log(`⚠️ صورة غير معروفة في الفهرس ${index}:`, img);\n//   }\n// });\n\n// console.log('✅ Output:', JSON.stringify(output, null, 2));\n// return output;\n\nconst data = $input.first().json;\nconst images = data.images || [];\n\n// ✅ في حال عدم وجود صور، أرجع نفس بيانات المنتج لكي يستمر السير\nif (!Array.isArray(images) || images.length === 0) {\n  console.log('⚠️ لا توجد صور جديدة — سيتم الاحتفاظ بالصور القديمة.');\n  return [{\n    json: {\n      name: data.name,\n      description: data.description,\n      price: data.price,\n      product_id: data.product_id,\n      image_url_1: data.image_url_1,\n      image_url_2: data.image_url_2,\n      image_url_3: data.image_url_3,\n      image_url_4: data.image_url_4,\n      type: 'existing',\n      text: `${data.name} - ${data.description}`\n    }\n  }];\n}\n\nconst output = [];\n\nimages.forEach((img, index) => {\n  const isBase64 = img.base64 && img.base64.startsWith('data:image');\n\n  if (isBase64) {\n    // ✅ صورة جديدة - تحتاج رفع إلى S3\n    const base64Data = img.base64.split(',')[1];\n    output.push({\n      json: {\n        name: data.name,\n        description: data.description,\n        price: data.price,\n        product_id: data.product_id,\n        imageIndex: index + 1,\n        fileName: `${data.product_id || 'product'}_${Date.now()}_${index + 1}.jpg`,\n        mimeType: img.mimeType || 'image/jpeg',\n        type: 'new'\n      },\n      binary: {\n        image: {\n          data: base64Data,\n          mimeType: img.mimeType || 'image/jpeg'\n        }\n      }\n    });\n  } else if (img.fileName && img.fileName.startsWith('http')) {\n    // ✅ صورة قديمة\n    output.push({\n      json: {\n        name: data.name,\n        description: data.description,\n        price: data.price,\n        product_id: data.product_id,\n        imageIndex: index + 1,\n        image_url: img.fileName,\n        type: 'existing'\n      }\n    });\n  } else {\n    console.log(`⚠️ صورة غير معروفة في الفهرس ${index}:`, img);\n  }\n});\n\nconsole.log('✅ Output:', JSON.stringify(output, null, 2));\nreturn output;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1728,
+        464
+      ],
+      "id": "252ecf50-fbbb-405c-a451-14c3a6cfd962",
+      "name": "Check Image"
+    },
+    {
+      "parameters": {
+        "jsCode": "const oldImages = $input.all().filter(item => item.json.type === 'existing');\n\nreturn oldImages.map(item => ({\n  json: {\n    ...item.json,\n    product_id: item.json.product_id // ✅ نقل product_id\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1472,
+        608
+      ],
+      "id": "e62f9f7f-b52f-4de7-8f60-7083c01286cd",
+      "name": "Filter Old Images"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -240,
+        592
+      ],
+      "id": "13c709fd-89a5-41c5-ba97-20aff9e38f81",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "// // 🔍 تشخيص دقيق\n// const items = $input.all();\n\n// console.log('=== تشخيص عقدة IF ===');\n// console.log(`📊 عدد العناصر: ${items.length}`);\n\n// items.forEach((item, idx) => {\n//   console.log(`\\n--- العنصر ${idx} ---`);\n//   console.log('JSON:', JSON.stringify(item.json, null, 2));\n//   console.log('Binary keys:', item.binary ? Object.keys(item.binary) : 'لا يوجد binary');\n//   console.log('Binary.image موجود؟', !!item.binary?.image);\n//   console.log('Type:', item.json.type);\n// });\n\n// const newImages = items.filter(item => {\n//   const isNew = item.json.type === \"new\";\n//   const hasBinary = !!item.binary?.image;\n  \n//   console.log(`\\n🖼️ فحص صورة ${item.json.imageIndex}:\n//     - النوع: ${item.json.type}\n//     - isNew: ${isNew}\n//     - hasBinary: ${hasBinary}`);\n  \n//   return isNew && hasBinary;\n// });\n\n// console.log(`\\n📈 نتيجة التصفية: ${newImages.length} صورة`);\n\n// if (newImages.length === 0) {\n//   console.log('⚠️ لا توجد صور جديدة ذات binary صالح');\n  \n//   return [{\n//     json: {\n//       name: items[0].json.name,\n//       description: items[0].json.description,\n//       price: items[0].json.price,\n//       product_id: items[0].json.product_id,\n//       seller_id: items[0].json.seller_id || 0,\n//       hasNewImages: false\n//     }\n//   }];\n// }\n\n// console.log(`✅ تم العثور على ${newImages.length} صورة جديدة صالحة`);\n\n// // 🔑 إرجاع الصور مع binary و hasNewImages: true\n// return newImages.map(item => ({\n//   json: {\n//     ...item.json,\n//     hasNewImages: true\n//   },\n//   binary: item.binary\n// }));  \n\nconst items = $input.all();\n\n// 🔍 استخراج الصور الجديدة فقط (التي تحتوي على binary.image)\nconst newImages = items.filter(item => item.json.type === 'new' && item.binary?.image);\n\n// ✅ في حال وجود صور جديدة\nif (newImages.length > 0) {\n  console.log(`✅ تم العثور على ${newImages.length} صورة جديدة، سيتم رفعها.`);\n  return newImages.map(item => ({\n    json: {\n      ...item.json,\n      hasNewImages: true,\n      skipUpload: false\n    },\n    binary: item.binary\n  }));\n}\n\n// ⚠️ في حال عدم وجود صور جديدة\nconsole.log('⚠️ لا توجد صور جديدة — سيتم تخطي رفع الصور.');\nreturn [{\n  json: {\n    ...items[0].json,\n    hasNewImages: false,\n    skipUpload: true // ← هذه العلامة ستُستخدم لتخطي رفع الصور\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1440,
+        400
+      ],
+      "id": "1acb3270-4b3c-483e-9cd9-e150f867403a",
+      "name": "IF",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "jsCode": "const row = $input.first().json;\n\nconst s3Bucket = 'te-kamul-products-eu-central-1-1248';\nconst keys = [];\n\nfor (let i = 1; i <= 4; i++) {\n  const url = row[`image_url_${i}`];\n  if (url && url.includes(s3Bucket)) {\n    // استخراج مسار الصورة فقط\n    const key = url.split(`${s3Bucket}.s3.eu-central-1.amazonaws.com/`)[1];\n    if (key) keys.push(key);\n  }\n}\n\nreturn keys.map(k => ({\n  json: {\n    bucket: s3Bucket,\n    key: k\n  }\n}));\n\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -912,
+        768
+      ],
+      "id": "d8b70ed7-93dd-46ab-8a8b-7c9c94fa2d7d",
+      "name": "Extract Image Keys"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "bucketName": "={{ $json.bucket }}",
+        "fileKey": "={{ $json.key }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.awsS3",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        768
+      ],
+      "id": "a1eb5962-9aae-4bba-83d9-9546acd70570",
+      "name": "Delete a file",
+      "credentials": {
+        "aws": {
+          "id": "zLqQRjKbHOyfCg4J",
+          "name": "AWS (IAM) account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": " # Productes Trigger",
+        "height": 256,
+        "width": 1232
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1536,
+        80
+      ],
+      "id": "825ca09e-317a-4d12-815f-2e384d99ccec",
+      "name": "Sticky Note",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "# Update product",
+        "height": 368,
+        "width": 3136
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2336,
+        368
+      ],
+      "id": "0ab58569-fefb-4ebf-9a63-c2b6254e37a2",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# Delete product",
+        "height": 176,
+        "width": 1376
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1664,
+        752
+      ],
+      "id": "537a689b-a17c-4bec-871f-43995fc5f814",
+      "name": "Sticky Note3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "# Add product\n",
+        "width": 1824
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2032,
+        944
+      ],
+      "id": "20a11aa1-1e18-40a9-b767-7471b4495c1d",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 3,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c4da9909-e4a8-4539-9adb-d571db619d92",
+              "leftValue": "={{$json.skipUpload}}",
+              "rightValue": "false",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1216,
+        400
+      ],
+      "id": "1756701f-1623-4352-a046-9e4d4e6b0a51",
+      "name": "built-in"
+    },
+    {
+      "parameters": {
+        "multipleMethods": true,
+        "path": "messengerbot",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "257d0795-60e5-44f8-a42d-e07c2c1d1a3f",
+      "name": "Messenger Webhook1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2368,
+        1760
+      ],
+      "webhookId": "534ab459-17b2-449d-b4cb-9f8b2f962fc5"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.query['hub.challenge'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -2080,
+        1600
+      ],
+      "id": "f30225fa-2697-4fa7-8d7b-b57c7fc4521a",
+      "name": "Respond to Webhook - Verification1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "jRxEFqxsMIz5yxRh",
+          "mode": "list",
+          "cachedResultName": "products",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/jRxEFqxsMIz5yxRh"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_id",
+              "keyValue": "={{ $json.user_id }}"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -1056,
+        1776
+      ],
+      "id": "dcd373ef-38f8-48b0-b6f8-a5bc3dc947c5",
+      "name": "Get row(s)1",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "functionCode": "\n// const entry = $node[\"Messenger Webhook1\"].json.body.entry[0];\n// const messaging = entry.messaging[0];\n// const messageText = messaging.message?.text;\n// const senderId = messaging.sender.id;\n// const pageId = entry.id;\n// const timestamp = messaging.timestamp;\n\n// if (!messageText) {\n//   throw new Error(\"No message text\");\n// }\n\n// return [{\n//   json: {\n//     input: messageText,\n//     senderId: senderId,\n//     pageId: pageId,\n//     timestamp: timestamp\n//   }\n// }];\n\nconst body = $node[\"Messenger Webhook1\"].json.body;\nconst objectType = body.object;\nconst entry = body.entry[0];\nlet senderId, messageText, pageId, timestamp;\n\nif (entry.changes) {\n  const change = entry.changes[0].value;\n  senderId = change.sender?.id || change.from?.id;\n  messageText = change.message?.text || change.messages?.[0]?.text;\n  pageId = change.recipient?.id || entry.id;\n  timestamp = change.timestamp || Date.now();\n} else {\n  const messaging = entry.messaging[0];\n  const msgSender = messaging.sender.id;\n  const msgRecipient = messaging.recipient?.id;\n  pageId = entry.id; // ✅ دائماً page_id صحيح\n\n  // ✅ للإنستغرام: sender قد يكون الصفحة نفسها، نأخذ الطرف الآخر\n  if (objectType === 'instagram' && msgSender === pageId) {\n    senderId = msgRecipient;\n  } else {\n    senderId = msgSender;\n  }\n\n  messageText = messaging.message?.text;\n  timestamp = messaging.timestamp;\n}\n\nif (!messageText) throw new Error(\"No message text\");\n\nreturn [{\n  json: { input: messageText, senderId, pageId, timestamp, source: objectType }\n}];"
+      },
+      "id": "7f711233-bb93-4cd2-a6d1-10d6fc4f2bad",
+      "name": "Extract Message",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -2192,
+        1776
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const switchItems = $('Switch').all();\nconst switchData = switchItems.length > 0 ? switchItems[0].json : {};\n\nconst contextNode = $('Get User Context').first();\nconst contextData = contextNode ? contextNode.json : {};\n\nconst senderId = switchData.senderId || contextData.senderId || $json.senderId;\nconst phone = switchData.phone || null;\nconst address = switchData.address || null;\nconst selectedProduct = contextData.selectedProduct || 'غير محدد';\n\nconst user_id = $json.user_id || contextData.user_id || null;\nconst page_id = $json.page_id || contextData.page_id || null;\nconst access_token = $json.access_token || null; // ✅ إضافة\n\nreturn [{\n  json: {\n    senderId,\n    selectedProduct,\n    user_id,\n    page_id,\n    phone,\n    address,\n    access_token,\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -928,
+        2000
+      ],
+      "id": "ecf2dccc-4676-4e2b-9079-696e1cf76a5c",
+      "name": "Update or Create Context1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v17.0/me/messages?access_token={{ $json.access_token.trim() }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { messaging_type: $json.messaging_type, recipient: $json.recipient, message: $json.message } }}",
+        "options": {}
+      },
+      "id": "03e3906d-0026-4db4-b04d-4be9f9f9a5e5",
+      "name": "Send Final Response to Messenger1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        288,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const senderId = $json.senderId || '';\nconst phone = $json.phone || '';\nconst address = $json.address || '';\nconst selectedProduct = $json.selectedProduct || 'المنتج المحدد';\n\n// ✅ صح - يأخذ من Prepare Order Data مباشرة\nconst access_token = $('Prepare Order Data').first().json.access_token;\n\nconst messageText = `🎉 تم تسجيل طلبك بنجاح!\\n\\n✅ تفاصيل الطلب:\\n━━━━━━━━━━━━━━━\\n📦 المنتج: ${selectedProduct}\\n📱 رقم الهاتف: ${phone}\\n📍 العنوان: ${address}\\n━━━━━━━━━━━━━━━\\n\\n📞 سنتواصل معك خلال 24 ساعة لتأكيد الطلب.\\n\\n💬 يمكنك طلب منتج آخر في أي وقت!\\nشكراً لثقتك بنا 🙏`;\n\nreturn [{\n  json: {\n    messaging_type: \"RESPONSE\",\n    recipient: { id: senderId },\n    message: { text: messageText },\n    access_token: access_token\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -416,
+        2000
+      ],
+      "id": "3b826fb5-fa48-4cc6-ad8e-6943aa3e73d9",
+      "name": "Prepare Confirmation Message1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -2032,
+        1776
+      ],
+      "id": "482ea4e8-bb66-4149-a60a-c7f3cf242f50",
+      "name": "Respond to Webhook5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v17.0/me/messages?access_token={{ $json.access_token }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { messaging_type: $json.messaging_type, recipient: $json.recipient, message: $json.message } }}",
+        "options": {}
+      },
+      "id": "a6866d13-4536-4dca-aeb5-71142e8ed175",
+      "name": "Send Confirmation Message1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -224,
+        2000
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        64,
+        1824
+      ],
+      "id": "03abb928-497b-4978-92fe-1a588e80798e",
+      "name": "Wait1",
+      "webhookId": "08958db2-4764-4ea5-8f4f-d5066aedc496"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -128,
+        1776
+      ],
+      "id": "b6c3f485-126f-4b76-8b88-4c2de0625ec0",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me1",
+      "typeVersion": 1,
+      "position": [
+        64,
+        1680
+      ],
+      "id": "91c41abf-eef2-4904-a2c0-3084d4b40ec5"
+    },
+    {
+      "parameters": {
+        "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId; // ✅ بدون 1\nconst userMessage = $node[\"Extract Message\"].json.input.trim();\n\n// إذا الرسالة رقم، لا ترسل القائمة\nif (/^\\d+$/.test(userMessage)) {\n  return [];\n}\n\n// جلب المنتجات من Get row(s)1\nconst products = $('Get row(s)2').all().map(item => item.json);\n\n// بناء القائمة...\nlet menuText = \"🛍️ *مرحباً بك في متجرنا!*\\n\\n\";\nmenuText += \"اختر المنتج بكتابة الرقم:\\n\";\nmenuText += \"━━━━━━━━━━━━━━━\\n\\n\";\n\nproducts.forEach((product, index) => {\n  menuText += `*${index + 1}.* ${product.name}\\n`;\n  menuText += `   💰 ${product.price} دينار\\n\\n`;\n});\n\nmenuText += \"━━━━━━━━━━━━━━━\\n\";\nmenuText += \"✍️ *اكتب رقم المنتج للطلب*\";\n\nreturn [{\n  json: {\n    recipient: { id: senderId },\n    messaging_type: \"RESPONSE\",\n    message: { text: menuText }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -832,
+        1584
+      ],
+      "id": "016c522b-d1c0-4456-8d59-b09a5003c611",
+      "name": "Show Product Menu"
+    },
+    {
+      "parameters": {
+        "jsCode": "// const senderId = $node[\"Extract Message\"].json.senderId;\n// const message = $node[\"Extract Message\"].json.input.trim();\n\n// // تحويل الأرقام العربية للإنجليزية\n// function normalizeDigits(str) {\n//   const arabicToEnglish = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};\n//   return str.replace(/[٠-٩]/g, d => arabicToEnglish[d]);\n// }\n\n// const normalizedMessage = normalizeDigits(message);\n\n// // تحقق: هل الرسالة رقم منتج؟\n// const productNumberMatch = normalizedMessage.match(/^(\\d+)$/);\n// if (productNumberMatch) {\n//   return [{\n//     json: {\n//       senderId,\n//       selectedProductNumber: parseInt(productNumberMatch[1]) - 1,\n//       messageType: 'product_selection'\n//     }\n//   }];\n// }\n\n// // تحقق: هل الرسالة عنوان + هاتف؟\n// const phoneRegex = /((07\\d{9})|(\\+9647\\d{9}))/g;\n// const hasPhone = phoneRegex.test(normalizedMessage);\n// const phone = hasPhone ? normalizedMessage.match(phoneRegex)[0] : null;\n// const addressOnly = normalizedMessage.replace(phoneRegex, '').trim();\n// const hasAddress = addressOnly.length >= 5;\n\n// if (hasPhone && hasAddress) {\n//   return [{\n//     json: {\n//       senderId,\n//       phone,\n//       address: addressOnly,\n//       messageType: 'delivery_info'\n//     }\n//   }];\n// }\n\n// // رسالة افتراضية (عرض القائمة)\n// return [{\n//   json: {\n//     senderId,\n//     messageType: 'show_menu'\n//   }\n// }];\n\nconst senderId = $node[\"Extract Message\"].json.senderId;\nconst pageId = $node[\"Extract Message\"].json.pageId; // ✅ إضافة\nconst message = $node[\"Extract Message\"].json.input.trim();\n\nfunction normalizeDigits(str) {\n  const arabicToEnglish = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};\n  return str.replace(/[٠-٩]/g, d => arabicToEnglish[d]);\n}\n\nconst normalizedMessage = normalizeDigits(message);\n\nconst productNumberMatch = normalizedMessage.match(/^(\\d+)$/);\nif (productNumberMatch) {\n  return [{\n    json: {\n      senderId,\n      pageId, // ✅\n      selectedProductNumber: parseInt(productNumberMatch[1]) - 1,\n      messageType: 'product_selection'\n    }\n  }];\n}\n\nconst phoneRegex = /((07\\d{9})|(\\+9647\\d{9}))/g;\nconst hasPhone = phoneRegex.test(normalizedMessage);\nconst phone = hasPhone ? normalizedMessage.match(phoneRegex)[0] : null;\nconst addressOnly = normalizedMessage.replace(phoneRegex, '').trim();\nconst hasAddress = addressOnly.length >= 5;\n\nif (hasPhone && hasAddress) {\n  return [{\n    json: {\n      senderId,\n      pageId, // ✅\n      phone,\n      address: addressOnly,\n      messageType: 'delivery_info'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    senderId,\n    pageId, // ✅\n    messageType: 'show_menu'\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1872,
+        1776
+      ],
+      "id": "6c19e70a-05a2-4d8a-ab81-994e94614d68",
+      "name": "Route Message"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.messageType }}",
+                    "rightValue": "show_menu",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "6eea9891-2164-4fa8-9dda-afe13e9732ef"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "35ab3444-153f-405f-babc-3b85fd56b4f2",
+                    "leftValue": "={{ $json.messageType }}",
+                    "rightValue": "product_selection",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "380482fd-7f96-46ea-9afc-cde5a2f4ae4f",
+                    "leftValue": "={{ $json.messageType }}",
+                    "rightValue": "delivery_info",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1728,
+        1760
+      ],
+      "id": "299c97db-c8b2-47fd-8349-ea4359dd3925",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "jsCode": "// FIXED: Gets data directly from Lookup User from Page1 node\ntry {\n  // Get data from Lookup User from Page1 node\n  const lookupNode = $('Lookup User from Page1').first().json;\n  const productNumber = lookupNode.selectedProductNumber;\n  const senderId = lookupNode.senderId;\n  const user_id = lookupNode.user_id;\n  \n  console.log('=== GET PRODUCT BY NUMBER ===');\n  console.log('Product Number:', productNumber);\n  console.log('Sender ID:', senderId);\n  console.log('User ID:', user_id);\n  \n  if (productNumber === undefined || productNumber === null) {\n    throw new Error('❌ selectedProductNumber is missing');\n  }\n  \n  if (!user_id) {\n    throw new Error('❌ user_id is missing');\n  }\n  \n  // Get products from input (from Get row(s)1)\n  const productsData = $input.all();\n  console.log('Products found:', productsData.length);\n  \n  if (!productsData || productsData.length === 0) {\n    throw new Error(`❌ No products found for user_id: ${user_id}`);\n  }\n  \n  if (productNumber < 0 || productNumber >= productsData.length) {\n    throw new Error(`❌ Invalid selection! Selected: ${productNumber + 1}, Available: ${productsData.length}`);\n  }\n  \n  const selectedProduct = productsData[productNumber].json;\n  \n  console.log('✅ Product selected:', selectedProduct.name);\n  \n  return {\n    json: {\n      product: selectedProduct,\n      senderId: senderId,\n      selectedProductName: selectedProduct.name,\n      user_id: user_id\n    }\n  };\n  \n} catch (error) {\n  console.error('❌ ERROR:', error.message);\n  throw error;\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -880,
+        1776
+      ],
+      "id": "087e8e6e-4e4c-434c-9e72-8f7c147e16e3",
+      "name": "Get Product by Number"
+    },
+    {
+      "parameters": {
+        "jsCode": "const nodeData = $node[\"Save Product Selection\"].json || {};\nconst product = nodeData.product;\nconst senderId = nodeData.senderId;\n\n// ✅ صح - يأخذ token الصفحة الصحيحة\nconst access_token = $('facebook_pages1').first().json.access_token;\n\nif (!product) throw new Error(\"❌ لم يتم العثور على بيانات المنتج\");\nif (!senderId) throw new Error(\"❌ لم يتم العثور على senderId\");\n\nconst caption = `📦 ${product.name}\\n💰 السعر: ${product.price} دينار\\n📝 ${product.description || \"\"}`;\nconst addressRequest = `لإتمام الطلب يرجى إرسال التفاصيل كاملة في رسالة واحدة:\\n\\n✍️ القياس/اللون/أي ملاحظات (إن وجدت)\\n📍 العنوان\\n📞 رقم الهاتف\\n\\nمثال: قياس L – أسود – البصرة/الطويسة – 0770XXXXXXX`;\n\nconst messages = [];\n\nfor (let i = 1; i <= 4; i++) {\n  const imageUrl = product[`image_url_${i}`];\n  if (imageUrl && imageUrl.trim() !== \"\") {\n    messages.push({\n      json: {\n        recipient: { id: senderId },\n        messaging_type: \"RESPONSE\",\n        message: { attachment: { type: \"image\", payload: { url: imageUrl.trim(), is_reusable: false } } },\n        access_token: access_token\n      }\n    });\n  }\n}\n\nmessages.push({ json: { recipient: { id: senderId }, messaging_type: \"RESPONSE\", message: { text: caption }, access_token: access_token } });\nmessages.push({ json: { recipient: { id: senderId }, messaging_type: \"RESPONSE\", message: { text: addressRequest }, access_token: access_token } });\n\nreturn messages;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        1776
+      ],
+      "id": "1e01e6b1-b97d-4bcb-aaae-34b4eb30b81e",
+      "name": "Format Product Message"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "jRxEFqxsMIz5yxRh",
+          "mode": "list",
+          "cachedResultName": "products",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/jRxEFqxsMIz5yxRh"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_id",
+              "keyValue": "={{ $json.user_id }}"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        1584
+      ],
+      "id": "b379daba-db65-4209-a4c1-6d7481ed4b71",
+      "name": "Get row(s)2",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v17.0/{{ $('facebook_pages').first().json.platform === 'instagram' ? $('facebook_pages').first().json.page_id + '/messages' : 'me/messages' }}?access_token={{ $('facebook_pages').first().json.access_token }}\n",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{$json}}",
+        "options": {}
+      },
+      "id": "b6e1f9ce-f025-42cd-a432-7412720d4038",
+      "name": "Send to Messenger",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -608,
+        1584
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const product = $json.product;\nconst senderId = $json.senderId;\n\nreturn [{\n  json: {\n    senderId: senderId,\n    selectedProduct: product.name,\n    product: product\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -688,
+        1776
+      ],
+      "id": "a3375c5b-590a-45e3-8c9a-1d25b4a4983b",
+      "name": "Save Product Selection"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "g8K01W3CKfGJ52es",
+          "mode": "list",
+          "cachedResultName": "user_contexts",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/g8K01W3CKfGJ52es"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "senderId",
+              "condition": "isNotEmpty"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "senderId": "={{ $json.senderId }}",
+            "selectedProduct": "={{ $json.selectedProduct }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "senderId",
+              "displayName": "senderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "selectedProduct",
+              "displayName": "selectedProduct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -496,
+        1776
+      ],
+      "id": "b600d122-5a05-408f-be3c-4a655a67b2c2",
+      "name": "Save to User Context"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "E8PgZVlXhivmAqzf",
+          "mode": "list",
+          "cachedResultName": "orders",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/E8PgZVlXhivmAqzf"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "senderId": "={{$json.senderId}}",
+            "selectedProduct": "={{$json.selectedProduct}}",
+            "phone": "={{$json.phone}}",
+            "address": "={{$json.address}}",
+            "timestamp": "={{new Date().toISOString()}}",
+            "user_id": "={{ $json.user_id }}",
+            "page_id": "={{ $json.page_id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "senderId",
+              "displayName": "senderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "page_id",
+              "displayName": "page_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "selectedProduct",
+              "displayName": "selectedProduct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        2000
+      ],
+      "id": "32d89364-82c9-4d1f-9525-9c1a1da9a370",
+      "name": "orders",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "g8K01W3CKfGJ52es",
+          "mode": "list",
+          "cachedResultName": "user_contexts",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/g8K01W3CKfGJ52es"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "senderId",
+              "keyValue": "={{ $('Route Message').first().json.senderId }}"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -1264,
+        2000
+      ],
+      "id": "23558314-592f-4875-af96-d370692c205f",
+      "name": "Get User Context",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "content": "# Select Products",
+        "height": 608,
+        "width": 3008
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2400,
+        1552
+      ],
+      "id": "a10ec249-5d3f-4127-8ffa-1fecd5a9fb31",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "g8K01W3CKfGJ52es",
+          "mode": "list",
+          "cachedResultName": "user_contexts",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/g8K01W3CKfGJ52es"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "senderId",
+              "keyValue": "={{ $json.senderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "selectedProduct": "={{ $json.selectedProduct }}",
+            "phone": "={{ $json.phone }}",
+            "address": "={{ $json.address }}",
+            "senderId": "={{ $json.senderId }}",
+            "user_id": "={{ $json.user_id }}",
+            "page_id": "={{ $json.page_id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "selectedProduct",
+              "displayName": "selectedProduct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "senderId",
+              "displayName": "senderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "page_id",
+              "displayName": "page_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -752,
+        2000
+      ],
+      "id": "a3eb2be1-34c6-4153-af6a-df3b3d27125c",
+      "name": "Save Phone & Address to Context"
+    },
+    {
+      "parameters": {
+        "path": "products",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, POST, PUT, DELETE, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization, X-Requested-With"
+              },
+              {
+                "name": "Access-Control-Max-Age",
+                "value": "86400"
+              },
+              {
+                "name": "Access-Control-Allow-Credentials",
+                "value": "false"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1696,
+        1264
+      ],
+      "id": "94ede265-f4ba-4156-868a-45cc8a3b512b",
+      "name": "GET /products",
+      "webhookId": "49f18452-5881-4703-9739-cf144291d86e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.httpMethod }}",
+              "value2": "OPTIONS"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1504,
+        1264
+      ],
+      "id": "649c5f47-8e1c-4fb6-af34-162ffd8da023",
+      "name": "Check OPTIONS - GET"
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -1200,
+        1200
+      ],
+      "id": "675c0ce6-0de6-4f2d-a286-0d212806ac79",
+      "name": "OPTIONS Response - GET"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nconst products = items.map(item => {\n  const data = item.json;\n  \n  const images = [];\n  if (data.image_url_1) images.push(data.image_url_1);\n  if (data.image_url_2) images.push(data.image_url_2);\n  if (data.image_url_3) images.push(data.image_url_3);\n  if (data.image_url_4) images.push(data.image_url_4);\n  \n  return {\n    id: data.id,\n    name: data.name,\n    description: data.description,\n    price: data.price,\n    images: images,\n    user_id: data.user_id\n  };\n});\n\nreturn [{\n  json: {\n    success: true,\n    count: products.length,\n    products: products\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -864,
+        1360
+      ],
+      "id": "a70710aa-b7bf-488f-9808-cb73421e7e15",
+      "name": "Format Products"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -656,
+        1360
+      ],
+      "id": "0a6a19dc-7ec8-422c-a55c-2b2aa790c9c1",
+      "name": "Respond Products"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "jRxEFqxsMIz5yxRh",
+          "mode": "list",
+          "cachedResultName": "products"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_id",
+              "keyValue": "={{ $json.query.user_id }}"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -1296,
+        1360
+      ],
+      "id": "527b957c-0f0c-479a-9bbf-d28045c93b3b",
+      "name": "Fetch Products3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const user = $input.item.json;\n\nreturn [{\n  json: user\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3152,
+        1776
+      ],
+      "id": "45c38bf5-6163-41af-9d15-4cbccd8f60ff",
+      "name": "Extract User Record"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{{\n  \"success\": false,\n  \"error\": $json.error_message || \"خطأ في التحقق من بيانات المستخدم\",\n  \"message\": \"فشل تسجيل الدخول\"\n}}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -2704,
+        2000
+      ],
+      "id": "bd8c690b-a79b-4564-b092-63e1774a8328",
+      "name": "Respond - Auth Error"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "login",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3952,
+        1872
+      ],
+      "id": "4c03a67a-1977-4f22-8217-18683b201d0a",
+      "name": "POST /login1",
+      "webhookId": "login-webhook-id-here"
+    },
+    {
+      "parameters": {
+        "jsCode": "const { email, password } = $json.body;\n\nif (!email || !password) {\n  throw new Error('البريد الإلكتروني وكلمة المرور مطلوبان');\n}\n\nif (!email.includes('@')) {\n  throw new Error('البريد الإلكتروني غير صحيح');\n}\n\nif (password.length < 6) {\n  throw new Error('كلمة المرور يجب أن تكون 6 أحرف على الأقل');\n}\n\nreturn [{\n  json: {\n    email: email.toLowerCase().trim(),\n    password: password,\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3760,
+        1872
+      ],
+      "id": "e5650cd2-151f-4243-8f8f-60eae7944f81",
+      "name": "Validate Credentials1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "eFugFToCmuNIQVVO",
+          "mode": "list",
+          "cachedResultName": "user_credentials",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/eFugFToCmuNIQVVO"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "email",
+              "keyValue": "={{$json.email}}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -3520,
+        1872
+      ],
+      "id": "2da597c1-5f92-41f3-b215-1eca40c0ecf0",
+      "name": "Get User from DB1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{$input.all().length > 0}}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "id": "56bf09fd-cd03-4355-b3e8-dd7591d6b6d6"
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -3312,
+        1872
+      ],
+      "id": "5ec853fb-119a-4c72-a65d-c30f2554f353",
+      "name": "User Exists?1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const userRecord = $json;\nconst submittedPassword = $node['Validate Credentials1'].json.password;\nconst storedPassword = userRecord.password_hash || userRecord.password;\n\nconst passwordMatch = submittedPassword === storedPassword;\n\nif (!passwordMatch) {\n  throw new Error('كلمة المرور غير صحيحة');\n}\n\nif (!userRecord.id && !userRecord.user_id) {\n  throw new Error('معرف المستخدم غير موجود في السجل');\n}\n\nconst token = 'TOKEN_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);\nconst userId = userRecord.id || userRecord.user_id;\n\nreturn [{\n  json: {\n    user_id: userId,\n    email: userRecord.email,\n    name: userRecord.name || '',\n    token: token,\n    expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2784,
+        1776
+      ],
+      "id": "0519a95f-9a60-40e7-9a82-9f70dd7af635",
+      "name": "Verify Password & Generate Token1"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"user_id\": {{$json.user_id}},\n  \"token\": \"{{$json.token}}\",\n  \"email\": \"{{$json.email}}\",\n  \"name\": \"{{$json.name}}\",\n  \"expires_at\": \"{{$json.expires_at}}\",\n  \"message\": \"تم تسجيل الدخول بنجاح ✅\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -2592,
+        1776
+      ],
+      "id": "8636c6e5-dec9-4208-b070-437914a661dd",
+      "name": "Respond Success1"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{{\n  \"success\": false,\n  \"error\": \"البريد الإلكتروني غير مسجل\",\n  \"message\": \"هذا البريد الإلكتروني لم يتم تسجيله في النظام\"\n}}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -2976,
+        2000
+      ],
+      "id": "e9a38b56-113d-4963-99d0-f29043ca8a39",
+      "name": "Respond - User Not Found1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "logout",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "id": "ce68d8e2-2383-427d-9e8c-fdfdf360f415",
+      "name": "POST /logout",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3344,
+        1440
+      ],
+      "webhookId": "logout-webhook-001"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.httpMethod }}",
+              "value2": "OPTIONS"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -3136,
+        1440
+      ],
+      "id": "18b3a431-57d3-4fd6-810e-7cf961477ea5",
+      "name": "Check OPTIONS"
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -2848,
+        1296
+      ],
+      "id": "aa89981d-115f-4b01-a69a-843a251d6283",
+      "name": "OPTIONS Response"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body || {};\nconst user_id = body.user_id;\nconst token = body.token;\n\nif (!user_id || !token) {\n  return [{\n    json: {\n      success: false,\n      message: 'Missing user_id or token'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    success: true,\n    message: 'تم تسجيل الخروج بنجاح ✅',\n    user_id: user_id,\n    logged_out_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "c086b561-4966-4880-a6f9-71cc30d8ae7e",
+      "name": "Process Logout",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2912,
+        1536
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "id": "62b0239d-9b46-47e8-bdbe-e0959369ef3b",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -2672,
+        1536
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nconst filtered = items.filter(item => {\n  const userId = item.json.user_id;\n  return userId && userId !== null;  // فقط المنتجات اللي لها user_id\n});\n\nreturn filtered;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1088,
+        1360
+      ],
+      "id": "dd397a93-7bf5-4fcb-bd26-1ae87cd006e5",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "// const pageData = $input.first().json;\n// platform: (pageData.platform || 'messenger').trim()\n\n// return [{\n//   json: {\n//     user_id: pageData.user_id,\n//     page_id: pageData.page_id,\n//     access_token: pageData.access_token,\n//     platform: pageData.platform || 'messenger'\n//   }\n// }];\n\nconst allPages = $input.all();\nconst pageId = $('Route Message').first().json.pageId?.toString().trim();\n\nconst pageData = allPages.find(p => p.json.page_id?.toString().trim() === pageId);\n\nif (!pageData) throw new Error(`Page not found: ${pageId}`);\n\nreturn [{\n  json: {\n    user_id: pageData.json.user_id,\n    page_id: pageData.json.page_id?.toString().trim(),\n    access_token: pageData.json.access_token,\n    platform: (pageData.json.platform || 'messenger').trim()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1200,
+        1584
+      ],
+      "id": "60ad00f8-e1c8-47ef-a0b1-723304d1b652",
+      "name": "facebook_pages"
+    },
+    {
+      "parameters": {
+        "jsCode": "// const senderId = $('Route Message').first().json.senderId;\n// const selectedProduct = $json.selectedProduct;\n// const phone = $('Route Message').first().json.phone;\n// const address = $('Route Message').first().json.address;\n\n// // ✅ جلب من show_menu2\n// const pageData = $('show_menu2').first().json;\n\n// return [{\n//   json: {\n//     senderId,\n//     selectedProduct,\n//     phone,\n//     address,\n//     page_id: pageData.page_id,\n//     user_id: pageData.user_id,\n//     access_token: pageData.access_token,\n//     timestamp: new Date().toISOString(),\n//     status: \"pending\"\n//   }\n// }];\n\nconst senderId = $('Route Message').first().json.senderId;\nconst pageId = $('Route Message').first().json.pageId?.toString().trim();\n\n// فلتر الصفحة يدوياً من كل الصفوف\nconst allPages = $('show_menu2').all();\nconst pageRow = allPages.find(p => p.json.page_id?.toString().trim() === pageId);\nif (!pageRow) throw new Error(`Page not found: ${pageId}`);\n\nconst selectedProduct = $('Get User Context').first().json.selectedProduct;\nconst phone = $('Route Message').first().json.phone;\nconst address = $('Route Message').first().json.address;\n\nreturn [{\n  json: {\n    senderId,\n    selectedProduct,\n    phone,\n    address,\n    page_id: pageRow.json.page_id,\n    user_id: pageRow.json.user_id,\n    access_token: pageRow.json.access_token,\n    platform: (pageRow.json.platform || 'messenger').trim(),\n    timestamp: new Date().toISOString(),\n    status: \"pending\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1088,
+        2000
+      ],
+      "id": "91447b73-4262-4cd3-938e-4114351b32d4",
+      "name": "Prepare Order Data"
+    },
+    {
+      "parameters": {
+        "path": "orders",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3392,
+        992
+      ],
+      "id": "404b2d37-55aa-4135-8d12-665084b3d294",
+      "name": "GET /orders",
+      "webhookId": "dbbdedf5-fe9c-4350-a0ce-15cbb49cd8b8"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "E8PgZVlXhivmAqzf",
+          "mode": "list",
+          "cachedResultName": "orders",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/E8PgZVlXhivmAqzf"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "user_id",
+              "keyValue": "={{ $json.query.user_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -2992,
+        1088
+      ],
+      "id": "cd179411-e6a2-4b4c-a85a-eecf1407de87",
+      "name": "Fetch Orders by User"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nconst orders = items.map(item => {\n  const data = item.json;\n  \n  return {\n    id: data.id,\n    senderId: data.senderId,\n    selectedProduct: data.selectedProduct,\n    phone: data.phone,\n    address: data.address,\n    user_id: data.user_id,\n    page_id: data.page_id,\n    status: data.status || 'pending',\n    timestamp: data.timestamp,\n    createdAt: data.createdAt,\n    updatedAt: data.updatedAt\n  };\n});\n\nreturn [{\n  json: {\n    success: true,\n    count: orders.length,\n    orders: orders\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2800,
+        1088
+      ],
+      "id": "e6402dc3-fd74-40d0-9eeb-86f54d319cb5",
+      "name": "Format Orders Response"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -2592,
+        1088
+      ],
+      "id": "0969104b-ffe6-40ea-9876-698e8ad8c3fa",
+      "name": "Respond Orders"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "check-options",
+              "leftValue": "={{ $json.httpMethod }}",
+              "rightValue": "OPTIONS",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -3200,
+        992
+      ],
+      "id": "4587ab78-9a5e-4482-b40a-2b16fc6f3a50",
+      "name": "Check OPTIONS1"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              },
+              {
+                "name": "Access-Control-Max-Age",
+                "value": "86400"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -2992,
+        880
+      ],
+      "id": "1b40260a-4090-4a6b-8a1e-d0050998b4b6",
+      "name": "OPTIONS Response1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// const pageData = $input.first().json;\n// const senderId = $('Route Message').first().json.senderId;\n// const selectedProductNumber = $('Route Message').first().json.selectedProductNumber;\n\n// return [{\n//   json: {\n//     page_id: pageData.page_id,\n//     access_token: pageData.access_token,\n//     user_id: pageData.user_id,\n//     senderId: senderId,\n//     selectedProductNumber: selectedProductNumber,\n//     messageType: 'product_selection'\n//   }\n// }];\n\nconst allPages = $input.all();\nconst pageId = $('Route Message').first().json.pageId?.toString().trim();\nconst senderId = $('Route Message').first().json.senderId;\nconst selectedProductNumber = $('Route Message').first().json.selectedProductNumber;\n\nconst pageData = allPages.find(p => p.json.page_id?.toString().trim() === pageId);\nif (!pageData) throw new Error(`Page not found: ${pageId}`);\n\nreturn [{\n  json: {\n    page_id: pageData.json.page_id?.toString().trim(),\n    access_token: pageData.json.access_token,\n    user_id: pageData.json.user_id,\n    platform: (pageData.json.platform || 'messenger').trim(),\n    senderId,\n    selectedProductNumber\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1392,
+        1776
+      ],
+      "id": "81e9aceb-aa59-4a10-88af-fb1ac556bc9a",
+      "name": "facebook_pages1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ✅ يأخذ من facebook_pages1 الذي يحتوي الصفحة الصحيحة المفلترة\nconst pageData = $('facebook_pages1').first().json;\n\nreturn [{\n  json: {\n    user_id: pageData.user_id,\n    page_id: pageData.page_id,\n    senderId: pageData.senderId,\n    selectedProductNumber: pageData.selectedProductNumber\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1216,
+        1776
+      ],
+      "id": "f6f22baa-78c1-4072-b42a-ab152d10b570",
+      "name": "Lookup User from Page1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "jRxEFqxsMIz5yxRh",
+          "mode": "list",
+          "cachedResultName": "products",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/jRxEFqxsMIz5yxRh"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $json.body.product_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -2048,
+        464
+      ],
+      "id": "192171b9-d701-4c31-a61f-55c2e44b1615",
+      "name": "Fetch Existing Product"
+    },
+    {
+      "parameters": {
+        "content": "# GET /products\n",
+        "height": 384,
+        "width": 1632
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1872,
+        1136
+      ],
+      "typeVersion": 1,
+      "id": "a5bd62e9-a1d8-47a8-8100-5ef68dfaacc4",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# Login to Account\n",
+        "height": 432,
+        "width": 1584,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4000,
+        1760
+      ],
+      "typeVersion": 1,
+      "id": "7a3d86b8-b033-4fbf-8cf6-1848abd9e0ba",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "# Logout Account",
+        "height": 416,
+        "width": 1008,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3472,
+        1280
+      ],
+      "typeVersion": 1,
+      "id": "4f6cc0c4-51ef-412a-a753-c89f79fbd524",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "# GET /orders",
+        "height": 368,
+        "width": 1072,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3472,
+        864
+      ],
+      "typeVersion": 1,
+      "id": "2238dd14-2c66-4bc8-ab62-7a03cffff2f7",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "delete-order",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "DELETE, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3856,
+        480
+      ],
+      "id": "78bd49db-3e76-49a1-8768-5c1756c996e8",
+      "name": "DELETE /order",
+      "webhookId": "457d7ce4-edc1-4820-954a-88186f5c3928",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 3,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "92b0885d-b9ac-4457-bb53-a32130bfe431",
+              "leftValue": "={{ $json.httpMethod }}",
+              "rightValue": "OPTIONS",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -3616,
+        480
+      ],
+      "id": "afc12b4a-1b22-4585-a6dd-eb2adeea2ede",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -3424,
+        368
+      ],
+      "id": "da0eeff5-7582-4465-9ba4-abf65bd6bf78",
+      "name": "OPTIONS Response - Delete"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body || $json;\n\nif (!body.order_id || !body.user_id) {\n  return [{\n    json: {\n      valid: false,\n      error: 'Missing required fields: order_id or user_id'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    order_id: String(body.order_id).trim(),  // ✅ Keep as string, remove whitespace\n    user_id: String(body.user_id).trim()     // ✅ Convert user_id to string\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3408,
+        576
+      ],
+      "id": "9147623c-e8cc-4ba3-8d28-abecd45fb92c",
+      "name": "Validate Delete Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 3,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "ce217d2b-fb7a-4967-9b51-4f1897760435",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -3168,
+        576
+      ],
+      "id": "f21bf3e6-06ca-4905-83f2-aeacbb0eb5b3",
+      "name": "Check Validation"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": false, \"message\": $json.error || \"Missing required fields\" } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -2896,
+        672
+      ],
+      "id": "20c4d9c2-471b-4a1b-92df-324a05e1c344",
+      "name": "Validation Error Response"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "E8PgZVlXhivmAqzf",
+          "mode": "list",
+          "cachedResultName": "orders",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/E8PgZVlXhivmAqzf"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "timestamp",
+              "keyValue": "={{ $json.order_id }}"
+            },
+            {
+              "keyName": "user_id",
+              "keyValue": "={{ $json.user_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -2896,
+        480
+      ],
+      "id": "b4aae32d-1b95-4118-b8b8-8865c33731ca",
+      "name": "Delete row(s)"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "=={{ {\n  \"success\": true,\n  \"message\": \"تم حذف الطلب بنجاح ✅\",\n  \"order_id\": $json.order_id\n} }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -2688,
+        480
+      ],
+      "id": "99ce626f-104a-4ff4-a215-a940cc731e18",
+      "name": "Delete Success Response"
+    },
+    {
+      "parameters": {
+        "content": "##  DELETE /order\n",
+        "height": 480,
+        "width": 1520,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3920,
+        352
+      ],
+      "id": "524bcb99-a0ce-4083-a6dc-2f829d026dde",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "confirm-booking",
+        "responseMode": "lastNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "id": "0a279af9-4309-421e-8706-62157cffd545",
+      "name": "Webhook - Confirm Booking1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -3888,
+        64
+      ],
+      "webhookId": "53bfcf79-46ff-4e67-81de-79fb12027173"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body || $input.first().json;\n\n// ✅ FIX: order_id is a TIMESTAMP string, not a numeric id\nif (!body.order_id || !body.user_id) {\n  return [{\n    json: {\n      valid: false,\n      error: 'Missing order_id or user_id'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    order_timestamp: String(body.order_id),  // ✅ keep as string timestamp\n    user_id: String(body.user_id),\n    confirmed_at: new Date().toISOString()\n  }\n}];\n"
+      },
+      "id": "603c1560-c672-4c12-ae70-5f3fa461a37f",
+      "name": "Validate Data1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3728,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "E8PgZVlXhivmAqzf",
+          "mode": "list",
+          "cachedResultName": "orders",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/E8PgZVlXhivmAqzf"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "timestamp",
+              "keyValue": "={{ $('Validate Data1').first().json.order_timestamp }}"
+            },
+            {
+              "keyName": "user_id",
+              "keyValue": "={{ $('Validate Data1').first().json.user_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -3584,
+        64
+      ],
+      "id": "f8c32d41-6b46-4730-8855-fbf8fe040a76",
+      "name": "Get Order Details1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const order = $input.first().json;\n\n// ✅ Check if order was actually found\nif (!order || !order.id) {\n  return [{\n    json: {\n      authorized: false,\n      error: 'Order not found'\n    }\n  }];\n}\n\nconst requestUserId = String($('Validate Data1').first().json.user_id);\nconst orderUserId = String(order.user_id);\n\nif (orderUserId !== requestUserId) {\n  return [{\n    json: {\n      authorized: false,\n      error: 'Unauthorized: Order belongs to different user'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    authorized: true,\n    order: order\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3248,
+        64
+      ],
+      "id": "30a971aa-5fbd-40bb-9043-0547cf6c9f1f",
+      "name": "User Authorization Check1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.authorized }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "id": "fb43527d-26a5-41bd-9729-742fa9f0d7fb"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "03fe4417-27ed-45b7-a141-58c5802233f5",
+      "name": "Check Order Exists1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -3088,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "E8PgZVlXhivmAqzf",
+          "mode": "list",
+          "cachedResultName": "orders",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/E8PgZVlXhivmAqzf"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('User Authorization Check1').first().json.order.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "confirmed"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "senderId",
+              "displayName": "senderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "page_id",
+              "displayName": "page_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "selectedProduct",
+              "displayName": "selectedProduct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -2912,
+        -48
+      ],
+      "id": "df462fcf-b5e9-4bd7-b1a2-304498e8b643",
+      "name": "Update Order Status1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const order = $('User Authorization Check1').first().json.order;\n\nreturn [{\n  json: {\n    success: true,\n    message: 'تم تثبيت الحجز بنجاح',\n    order_id: order.id,\n    order_details: {\n      product: order.selectedProduct,\n      phone: order.phone,\n      address: order.address,\n      status: 'confirmed',\n      confirmed_at: $('Validate Data1').first().json.confirmed_at\n    }\n  }\n}];"
+      },
+      "id": "56ad2ce4-b208-48be-a1ab-6c7c4f957891",
+      "name": "Success Response1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2656,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    success: false,\n    error: 'الطلب غير موجود',\n    message: 'لم يتم العثور على الطلب المطلوب'\n  }\n}];"
+      },
+      "id": "4197710d-d244-4d6d-91af-78c092a83ca3",
+      "name": "Error Response - Not Found1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2928,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Order Confirm Booking",
+        "height": 400,
+        "width": 1456,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3920,
+        -64
+      ],
+      "id": "4e3ffa12-3526-4461-b67e-cdf7d5b9c6ff",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "jsCode": "const targetTimestamp = $('Validate Data1').first().json.order_timestamp;\nconst orders = $input.all();\n\nconst matched = orders.find(item => \n  item.json.timestamp && item.json.timestamp.startsWith(targetTimestamp)\n);\n\nif (!matched) {\n  return [{ json: { id: null } }];\n}\n\nreturn [{ json: matched.json }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3424,
+        64
+      ],
+      "id": "0a867d9c-52d5-40d9-9303-9b3797f5525e",
+      "name": "TimestampFilter"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "OlvM9mLeb7K9kr0J",
+          "mode": "list",
+          "cachedResultName": "facebook_pages",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/OlvM9mLeb7K9kr0J"
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -1360,
+        1584
+      ],
+      "id": "810ba4ab-b846-43c8-ba8f-0d30ed9cf347",
+      "name": "show_menu"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "OlvM9mLeb7K9kr0J",
+          "mode": "list",
+          "cachedResultName": "facebook_pages",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/OlvM9mLeb7K9kr0J"
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -1552,
+        1776
+      ],
+      "id": "ee69dac5-a0d8-4b25-9152-174581cd2237",
+      "name": "show_menu1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "OlvM9mLeb7K9kr0J",
+          "mode": "list",
+          "cachedResultName": "facebook_pages",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/OlvM9mLeb7K9kr0J"
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -1456,
+        2000
+      ],
+      "id": "c8682130-695a-404f-a70e-af4d7d39be3c",
+      "name": "show_menu2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const user = $json;\nconst status = user.status || 'approved';\n\nif (status === 'pending') {\n  throw new Error('حسابك قيد المراجعة. انتظر الموافقة.');\n}\n\nreturn [{json: user}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2976,
+        1776
+      ],
+      "id": "c5e99250-a75f-45f6-8736-c39e383c6ce8",
+      "name": "Check Account Status"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "register",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "721e5eae-005b-4a18-9ef6-4048702bec3d",
+      "name": "POST /register",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -3920,
+        2352
+      ],
+      "webhookId": "732d9e32-1494-41ac-84fa-b6ed72623efa"
+    },
+    {
+      "parameters": {
+        "jsCode": "const { email, password, name, store_name, phone } = $json.body;\n\n// التحقق من الحقول المطلوبة\nif (!email || !password || !name || !store_name || !phone) {\n  throw new Error('جميع الحقول مطلوبة');\n}\n\n// التحقق من البريد\nif (!email.includes('@')) {\n  throw new Error('البريد الإلكتروني غير صحيح');\n}\n\n// التحقق من كلمة المرور\nif (password.length < 6) {\n  throw new Error('كلمة المرور قصيرة جداً');\n}\n\nreturn [{\n  json: {\n    email: email.toLowerCase().trim(),\n    password: password,\n    name: name.trim(),\n    store_name: store_name.trim(),\n    phone: phone.trim()\n  }\n}];"
+      },
+      "id": "99f9c4b2-6fca-4076-91bc-ad862052d707",
+      "name": "Validate Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3712,
+        2352
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "rowExists",
+        "dataTableId": {
+          "__rl": true,
+          "value": "eFugFToCmuNIQVVO",
+          "mode": "list",
+          "cachedResultName": "user_credentials"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "email",
+              "keyValue": "={{$json.email}}"
+            }
+          ]
+        }
+      },
+      "id": "a2741ce4-a4ef-4468-97d0-5f9b66804116",
+      "name": "Check Email Exists",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -3520,
+        2352
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{$json.emailExists}}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "id": "223b7ac3-94e7-49e9-9c20-f559226c8f75"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "2fd86f86-0080-4acb-b102-0e12ec7f81e3",
+      "name": "Email Already Registered?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -3168,
+        2352
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": false, \"error\": \"البريد الإلكتروني مسجل مسبقاً\"}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "e1ee4a8f-3c7d-44ec-a8af-a51e8cf0263d",
+      "name": "Error - Email Taken",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -2880,
+        2240
+      ]
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "eFugFToCmuNIQVVO",
+          "mode": "list",
+          "cachedResultName": "user_credentials",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/eFugFToCmuNIQVVO"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $('Validate Input').item.json.email }}",
+            "password_hash": "={{ $('Validate Input').item.json.password }}",
+            "name": "={{ $('Validate Input').item.json.name }}",
+            "store_name": "={{ $('Validate Input').item.json.store_name }}",
+            "phone": "={{ $('Validate Input').item.json.phone }}",
+            "status": "=pending  "
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "password_hash",
+              "displayName": "password_hash",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "store_name",
+              "displayName": "store_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "3922fb64-5915-4605-8eb1-57fea68425f5",
+      "name": "Save New User (status=pending)",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -2896,
+        2448
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true, \"message\": \"تم التسجيل بنجاح! انتظر الموافقة من الإدارة.\", \"email\": \"{{$json.email}}\"}",
+        "options": {
+          "responseCode": 201
+        }
+      },
+      "id": "a8fa1395-835f-4e56-903a-5ad4fc5be7b6",
+      "name": "Success - Registration Complete",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -2656,
+        2448
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const validatedData = $input.first().json;\nconst checkResults = $('Check Email Exists').all();\n\n// فحص إذا النتيجة تحتوي على email\nconst emailExists = checkResults.length > 0 && \n                    checkResults[0].json.email !== undefined;\n\nreturn [{\n  json: {\n    ...validatedData,\n    emailExists\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3344,
+        2352
+      ],
+      "id": "11096263-e79a-4aec-86c0-b6ed1a3efa2f",
+      "name": "Combine & Check Email"
+    },
+    {
+      "parameters": {
+        "content": "# POST /register",
+        "height": 432,
+        "width": 1584,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4000,
+        2224
+      ],
+      "typeVersion": 1,
+      "id": "68b2732f-c2cc-43b0-9d78-2a8f47d5d7e3",
+      "name": "Sticky Note11"
+    }
+  ],
+  "pinData": {
+    "Webhook - Confirm Booking1": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-n8n.17m6co.easypanel.host",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+            "content-length": "74",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "en-US,en;q=0.9,ar;q=0.8",
+            "content-type": "application/json",
+            "origin": "http://localhost:19006",
+            "priority": "u=1, i",
+            "referer": "http://localhost:19006/",
+            "sec-ch-ua": "\"Not:A-Brand\";v=\"99\", \"Google Chrome\";v=\"145\", \"Chromium\";v=\"145\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "149.255.204.22",
+            "x-forwarded-host": "n8n-n8n.17m6co.easypanel.host",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "1128ff46d93b",
+            "x-real-ip": "149.255.204.22"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "order_id": "2026-02-26T19:16:29.607Z",
+            "user_id": "1",
+            "status": "confirmed"
+          },
+          "webhookUrl": "https://n8n-n8n.17m6co.easypanel.host/webhook/confirm-booking",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Upsert row(s)1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger": {
+      "main": [
+        [
+          {
+            "node": "Render HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Products": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Products1": {
+      "main": [
+        [
+          {
+            "node": "Extract Image Keys",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Products2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update-product": {
+      "main": [
+        [
+          {
+            "node": "Fetch Existing Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add-product": {
+      "main": [
+        [
+          {
+            "node": "Validate Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete-product": {
+      "main": [
+        [
+          {
+            "node": "Fetch Products1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload a file": {
+      "main": [
+        [
+          {
+            "node": "Get S3 URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Product": {
+      "main": [
+        [
+          {
+            "node": "Loop Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get S3 URL": {
+      "main": [
+        [
+          {
+            "node": "Collect S3 URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render HTML1": {
+      "main": [
+        [
+          {
+            "node": "Fetch Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Check Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Images": {
+      "main": [
+        [
+          {
+            "node": "Upload a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect S3 URLs": {
+      "main": [
+        [
+          {
+            "node": "Upsert row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload a file1": {
+      "main": [
+        [
+          {
+            "node": "Get S3 URL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get S3 URL1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Images1": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect S3 URLs1": {
+      "main": [
+        [
+          {
+            "node": "Fetch Products2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Image": {
+      "main": [
+        [
+          {
+            "node": "Loop Images1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter Old Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Old Images": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Collect S3 URLs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "built-in",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Image Keys": {
+      "main": [
+        [
+          {
+            "node": "Delete a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a file": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "built-in": {
+      "main": [
+        [
+          {
+            "node": "Upload a file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Messenger Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook - Verification1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)1": {
+      "main": [
+        [
+          {
+            "node": "Get Product by Number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update or Create Context1": {
+      "main": [
+        [
+          {
+            "node": "Save Phone & Address to Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Final Response to Messenger1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Confirmation Message1": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation Message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook5": {
+      "main": [
+        [
+          {
+            "node": "Route Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Send Final Response to Messenger1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Replace Me1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me1": {
+      "main": [
+        [
+          {
+            "node": "Send Final Response to Messenger1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Show Product Menu": {
+      "main": [
+        [
+          {
+            "node": "Send to Messenger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Message": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "show_menu",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "show_menu1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "show_menu2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Product by Number": {
+      "main": [
+        [
+          {
+            "node": "Save Product Selection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Product Message": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Show Product Menu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Product Selection": {
+      "main": [
+        [
+          {
+            "node": "Save to User Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to User Context": {
+      "main": [
+        [
+          {
+            "node": "Format Product Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "orders": {
+      "main": [
+        [
+          {
+            "node": "Prepare Confirmation Message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Context": {
+      "main": [
+        [
+          {
+            "node": "Prepare Order Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Phone & Address to Context": {
+      "main": [
+        [
+          {
+            "node": "orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET /products": {
+      "main": [
+        [
+          {
+            "node": "Check OPTIONS - GET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check OPTIONS - GET": {
+      "main": [
+        [
+          {
+            "node": "OPTIONS Response - GET",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch Products3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Products": {
+      "main": [
+        [
+          {
+            "node": "Respond Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Products3": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract User Record": {
+      "main": [
+        [
+          {
+            "node": "Check Account Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST /login1": {
+      "main": [
+        [
+          {
+            "node": "Validate Credentials1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Credentials1": {
+      "main": [
+        [
+          {
+            "node": "Get User from DB1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User from DB1": {
+      "main": [
+        [
+          {
+            "node": "User Exists?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Exists?1": {
+      "main": [
+        [
+          {
+            "node": "Extract User Record",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond - User Not Found1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Password & Generate Token1": {
+      "main": [
+        [
+          {
+            "node": "Respond Success1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond - User Not Found1": {
+      "main": [
+        [
+          {
+            "node": "Respond - Auth Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST /logout": {
+      "main": [
+        [
+          {
+            "node": "Check OPTIONS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check OPTIONS": {
+      "main": [
+        [
+          {
+            "node": "OPTIONS Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Process Logout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Logout": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Format Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "facebook_pages": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Order Data": {
+      "main": [
+        [
+          {
+            "node": "Update or Create Context1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET /orders": {
+      "main": [
+        [
+          {
+            "node": "Check OPTIONS1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Orders by User": {
+      "main": [
+        [
+          {
+            "node": "Format Orders Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Orders Response": {
+      "main": [
+        [
+          {
+            "node": "Respond Orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check OPTIONS1": {
+      "main": [
+        [
+          {
+            "node": "OPTIONS Response1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch Orders by User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "facebook_pages1": {
+      "main": [
+        [
+          {
+            "node": "Lookup User from Page1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lookup User from Page1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Existing Product": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DELETE /order": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "OPTIONS Response - Delete",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Validate Delete Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OPTIONS Response - Delete": {
+      "main": [
+        []
+      ]
+    },
+    "Validate Delete Request": {
+      "main": [
+        [
+          {
+            "node": "Check Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Validation": {
+      "main": [
+        [
+          {
+            "node": "Delete row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Validation Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete row(s)": {
+      "main": [
+        [
+          {
+            "node": "Delete Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Confirm Booking1": {
+      "main": [
+        [
+          {
+            "node": "Validate Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Data1": {
+      "main": [
+        [
+          {
+            "node": "Get Order Details1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Order Details1": {
+      "main": [
+        [
+          {
+            "node": "TimestampFilter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Authorization Check1": {
+      "main": [
+        [
+          {
+            "node": "Check Order Exists1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Order Exists1": {
+      "main": [
+        [
+          {
+            "node": "Update Order Status1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Response - Not Found1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Order Status1": {
+      "main": [
+        [
+          {
+            "node": "Success Response1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TimestampFilter": {
+      "main": [
+        [
+          {
+            "node": "User Authorization Check1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "show_menu": {
+      "main": [
+        [
+          {
+            "node": "facebook_pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "show_menu1": {
+      "main": [
+        [
+          {
+            "node": "facebook_pages1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "show_menu2": {
+      "main": [
+        [
+          {
+            "node": "Get User Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Account Status": {
+      "main": [
+        [
+          {
+            "node": "Verify Password & Generate Token1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST /register": {
+      "main": [
+        [
+          {
+            "node": "Validate Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Input": {
+      "main": [
+        [
+          {
+            "node": "Check Email Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Email Exists": {
+      "main": [
+        [
+          {
+            "node": "Combine & Check Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Already Registered?": {
+      "main": [
+        [
+          {
+            "node": "Error - Email Taken",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Save New User (status=pending)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save New User (status=pending)": {
+      "main": [
+        [
+          {
+            "node": "Success - Registration Complete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine & Check Email": {
+      "main": [
+        [
+          {
+            "node": "Email Already Registered?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "timezone": "Asia/Baghdad",
+    "callerPolicy": "workflowsFromSameOwner",
+    "binaryMode": "separate",
+    "errorWorkflow": "MUFdp9zNAfS3E2EB"
+  },
+  "versionId": "3f76474c-bd3f-4bac-985a-61f6211d3763",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7fc34f0d09f29f5af7bd7968d78f75f1e07aa651f09bb42b8701cd9f168a4c83"
+  },
+  "id": "mLbs6nBXa2B21cF6L6_MG",
+  "tags": []
+}
