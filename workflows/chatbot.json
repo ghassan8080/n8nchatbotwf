@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-05T17:28:32.306Z",
+  "updatedAt": "2026-04-15T18:50:58.643Z",
   "createdAt": "2026-02-02T06:19:55.282Z",
   "id": "mLbs6nBXa2B21cF6L6_MG",
   "name": "chatbot",
@@ -928,7 +928,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://graph.facebook.com/v17.0/me/messages?access_token={{ $json.access_token.trim() }}",
+        "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + (($json.access_token && $json.access_token.toString().trim() !== '') ? $json.access_token.toString().trim() : $('facebook_pages1').first().json.access_token.toString().trim()) }}",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={{ { messaging_type: $json.messaging_type, recipient: $json.recipient, message: $json.message } }}",
@@ -4380,9 +4380,9 @@
       }
     ]
   },
-  "versionId": "3f76474c-bd3f-4bac-985a-61f6211d3763",
-  "activeVersionId": "3f76474c-bd3f-4bac-985a-61f6211d3763",
-  "versionCounter": 1872,
+  "versionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
+  "activeVersionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
+  "versionCounter": 1884,
   "triggerCount": 11,
   "shared": [
     {
@@ -4405,9 +4405,9 @@
   ],
   "tags": [],
   "activeVersion": {
-    "updatedAt": "2026-04-05T17:28:41.000Z",
-    "createdAt": "2026-04-05T17:28:32.309Z",
-    "versionId": "3f76474c-bd3f-4bac-985a-61f6211d3763",
+    "updatedAt": "2026-04-15T18:50:58.653Z",
+    "createdAt": "2026-04-15T18:50:58.653Z",
+    "versionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
     "workflowId": "mLbs6nBXa2B21cF6L6_MG",
     "nodes": [
       {
@@ -5331,7 +5331,7 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "=https://graph.facebook.com/v17.0/me/messages?access_token={{ $json.access_token.trim() }}",
+          "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + (($json.access_token && $json.access_token.toString().trim() !== '') ? $json.access_token.toString().trim() : $('facebook_pages1').first().json.access_token.toString().trim()) }}",
           "sendBody": true,
           "specifyBody": "json",
           "jsonBody": "={{ { messaging_type: $json.messaging_type, recipient: $json.recipient, message: $json.message } }}",
@@ -8727,16 +8727,24 @@
       }
     },
     "authors": "Ghassan Abdullah",
-    "name": "Version 3f76474c",
-    "description": "",
-    "autosaved": true,
+    "name": null,
+    "description": null,
+    "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2026-04-05T17:28:41.587Z",
-        "id": 474,
+        "createdAt": "2026-04-15T18:50:59.088Z",
+        "id": 489,
         "workflowId": "mLbs6nBXa2B21cF6L6_MG",
-        "versionId": "3f76474c-bd3f-4bac-985a-61f6211d3763",
+        "versionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
         "event": "activated",
+        "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
+      },
+      {
+        "createdAt": "2026-04-15T18:50:58.972Z",
+        "id": 488,
+        "workflowId": "mLbs6nBXa2B21cF6L6_MG",
+        "versionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
+        "event": "deactivated",
         "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
       }
     ]
