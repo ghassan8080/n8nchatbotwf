@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-15T18:50:58.643Z",
+  "updatedAt": "2026-04-17T19:51:52.759Z",
   "createdAt": "2026-02-02T06:19:55.282Z",
   "id": "mLbs6nBXa2B21cF6L6_MG",
   "name": "chatbot",
@@ -892,7 +892,7 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -1056,
+        -1040,
         1776
       ],
       "id": "dcd373ef-38f8-48b0-b6f8-a5bc3dc947c5",
@@ -919,7 +919,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -928,
+        -912,
         2000
       ],
       "id": "ecf2dccc-4676-4e2b-9079-696e1cf76a5c",
@@ -1029,12 +1029,12 @@
     },
     {
       "parameters": {
-        "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId; // ✅ بدون 1\nconst userMessage = $node[\"Extract Message\"].json.input.trim();\n\n// إذا الرسالة رقم، لا ترسل القائمة\nif (/^\\d+$/.test(userMessage)) {\n  return [];\n}\n\n// جلب المنتجات من Get row(s)1\nconst products = $('Get row(s)2').all().map(item => item.json);\n\n// بناء القائمة...\nlet menuText = \"🛍️ *مرحباً بك في متجرنا!*\\n\\n\";\nmenuText += \"اختر المنتج بكتابة الرقم:\\n\";\nmenuText += \"━━━━━━━━━━━━━━━\\n\\n\";\n\nproducts.forEach((product, index) => {\n  menuText += `*${index + 1}.* ${product.name}\\n`;\n  menuText += `   💰 ${product.price} دينار\\n\\n`;\n});\n\nmenuText += \"━━━━━━━━━━━━━━━\\n\";\nmenuText += \"✍️ *اكتب رقم المنتج للطلب*\";\n\nreturn [{\n  json: {\n    recipient: { id: senderId },\n    messaging_type: \"RESPONSE\",\n    message: { text: menuText }\n  }\n}];"
+        "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId;\nconst userMessage = $node[\"Extract Message\"].json.input.trim();\n\nconst userCtxItems = $('Get User Context Menu').all();\nconst userCtx = userCtxItems.length > 0 ? userCtxItems[0].json : null;\nif (userCtx && userCtx.selectedProduct === 'BOT_PAUSED') {\n  return [];\n}\n\nif (/^\\d+$/.test(userMessage)) {\n  return [];\n}\n\nconst products = $('Get row(s)2').all().map(item => item.json);\n\nlet menuText = \"🛍️ *مرحباً بك في متجرنا!*\\n\\n\";\nmenuText += \"اختر المنتج بكتابة الرقم:\\n\";\nmenuText += \"━━━━━━━━━━━━━━━\\n\\n\";\n\nproducts.forEach((product, index) => {\n  menuText += `*${index + 1}.* ${product.name}\\n`;\n  menuText += `   💰 ${product.price} دينار\\n\\n`;\n});\n\nmenuText += \"━━━━━━━━━━━━━━━\\n\";\nmenuText += \"0️⃣ *تحدث مع البائع مباشرة* 👤\\n\\n\";\nmenuText += \"✍️ *اكتب رقم المنتج للطلب أو 0 للتحدث مع البائع*\";\n\nreturn [{\n  json: {\n    recipient: { id: senderId },\n    messaging_type: \"RESPONSE\",\n    message: { text: menuText }\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -832,
+        -528,
         1584
       ],
       "id": "016c522b-d1c0-4456-8d59-b09a5003c611",
@@ -1042,7 +1042,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// const senderId = $node[\"Extract Message\"].json.senderId;\n// const message = $node[\"Extract Message\"].json.input.trim();\n\n// // تحويل الأرقام العربية للإنجليزية\n// function normalizeDigits(str) {\n//   const arabicToEnglish = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};\n//   return str.replace(/[٠-٩]/g, d => arabicToEnglish[d]);\n// }\n\n// const normalizedMessage = normalizeDigits(message);\n\n// // تحقق: هل الرسالة رقم منتج؟\n// const productNumberMatch = normalizedMessage.match(/^(\\d+)$/);\n// if (productNumberMatch) {\n//   return [{\n//     json: {\n//       senderId,\n//       selectedProductNumber: parseInt(productNumberMatch[1]) - 1,\n//       messageType: 'product_selection'\n//     }\n//   }];\n// }\n\n// // تحقق: هل الرسالة عنوان + هاتف؟\n// const phoneRegex = /((07\\d{9})|(\\+9647\\d{9}))/g;\n// const hasPhone = phoneRegex.test(normalizedMessage);\n// const phone = hasPhone ? normalizedMessage.match(phoneRegex)[0] : null;\n// const addressOnly = normalizedMessage.replace(phoneRegex, '').trim();\n// const hasAddress = addressOnly.length >= 5;\n\n// if (hasPhone && hasAddress) {\n//   return [{\n//     json: {\n//       senderId,\n//       phone,\n//       address: addressOnly,\n//       messageType: 'delivery_info'\n//     }\n//   }];\n// }\n\n// // رسالة افتراضية (عرض القائمة)\n// return [{\n//   json: {\n//     senderId,\n//     messageType: 'show_menu'\n//   }\n// }];\n\nconst senderId = $node[\"Extract Message\"].json.senderId;\nconst pageId = $node[\"Extract Message\"].json.pageId; // ✅ إضافة\nconst message = $node[\"Extract Message\"].json.input.trim();\n\nfunction normalizeDigits(str) {\n  const arabicToEnglish = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};\n  return str.replace(/[٠-٩]/g, d => arabicToEnglish[d]);\n}\n\nconst normalizedMessage = normalizeDigits(message);\n\nconst productNumberMatch = normalizedMessage.match(/^(\\d+)$/);\nif (productNumberMatch) {\n  return [{\n    json: {\n      senderId,\n      pageId, // ✅\n      selectedProductNumber: parseInt(productNumberMatch[1]) - 1,\n      messageType: 'product_selection'\n    }\n  }];\n}\n\nconst phoneRegex = /((07\\d{9})|(\\+9647\\d{9}))/g;\nconst hasPhone = phoneRegex.test(normalizedMessage);\nconst phone = hasPhone ? normalizedMessage.match(phoneRegex)[0] : null;\nconst addressOnly = normalizedMessage.replace(phoneRegex, '').trim();\nconst hasAddress = addressOnly.length >= 5;\n\nif (hasPhone && hasAddress) {\n  return [{\n    json: {\n      senderId,\n      pageId, // ✅\n      phone,\n      address: addressOnly,\n      messageType: 'delivery_info'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    senderId,\n    pageId, // ✅\n    messageType: 'show_menu'\n  }\n}];"
+        "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId;\nconst pageId = $node[\"Extract Message\"].json.pageId;\nconst message = $node[\"Extract Message\"].json.input.trim();\n\nfunction normalizeDigits(str) {\n  const arabicToEnglish = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};\n  return str.replace(/[٠-٩]/g, d => arabicToEnglish[d]);\n}\n\nconst normalizedMessage = normalizeDigits(message);\n\nif (normalizedMessage.trim() === '0') {\n  return [{ json: { senderId, pageId, messageType: 'talk_to_seller' } }];\n}\n\nconst productNumberMatch = normalizedMessage.match(/^(\\d+)$/);\nif (productNumberMatch) {\n  return [{ json: { senderId, pageId, selectedProductNumber: parseInt(productNumberMatch[1]) - 1, messageType: 'product_selection' } }];\n}\n\nconst phoneRegex = /((07\\d{9})|(\\+9647\\d{9}))/g;\nconst hasPhone = phoneRegex.test(normalizedMessage);\nconst phone = hasPhone ? normalizedMessage.match(phoneRegex)[0] : null;\nconst addressOnly = normalizedMessage.replace(phoneRegex, '').trim();\nconst hasAddress = addressOnly.length >= 5;\n\nif (hasPhone && hasAddress) {\n  return [{ json: { senderId, pageId, phone, address: addressOnly, messageType: 'delivery_info' } }];\n}\n\nreturn [{ json: { senderId, pageId, messageType: 'show_menu' } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1059,70 +1059,80 @@
           "values": [
             {
               "conditions": {
+                "combinator": "or",
+                "conditions": [
+                  {
+                    "id": "show-menu-cond",
+                    "leftValue": "={{ $json.messageType }}",
+                    "operator": {
+                      "operation": "equals",
+                      "type": "string"
+                    },
+                    "rightValue": "show_menu"
+                  },
+                  {
+                    "id": "talk-seller-cond",
+                    "leftValue": "={{ $json.messageType }}",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "operation": "equals",
+                      "type": "string"
+                    },
+                    "rightValue": "talk_to_seller"
+                  }
+                ],
                 "options": {
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
                   "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $json.messageType }}",
-                    "rightValue": "show_menu",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "6eea9891-2164-4fa8-9dda-afe13e9732ef"
-                  }
-                ],
-                "combinator": "and"
+                }
               }
             },
             {
               "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
+                "combinator": "and",
                 "conditions": [
                   {
                     "id": "35ab3444-153f-405f-babc-3b85fd56b4f2",
                     "leftValue": "={{ $json.messageType }}",
-                    "rightValue": "product_selection",
                     "operator": {
-                      "type": "string",
+                      "name": "filter.operator.equals",
                       "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
+                      "type": "string"
+                    },
+                    "rightValue": "product_selection"
                   }
                 ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
                 "options": {
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
                   "version": 3
-                },
+                }
+              }
+            },
+            {
+              "conditions": {
+                "combinator": "and",
                 "conditions": [
                   {
                     "id": "380482fd-7f96-46ea-9afc-cde5a2f4ae4f",
                     "leftValue": "={{ $json.messageType }}",
-                    "rightValue": "delivery_info",
                     "operator": {
-                      "type": "string",
+                      "name": "filter.operator.equals",
                       "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
+                      "type": "string"
+                    },
+                    "rightValue": "delivery_info"
                   }
                 ],
-                "combinator": "and"
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                }
               }
             }
           ]
@@ -1187,7 +1197,7 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -1040,
+        -1024,
         1584
       ],
       "id": "b379daba-db65-4209-a4c1-6d7481ed4b71",
@@ -1208,7 +1218,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -608,
+        -320,
         1584
       ]
     },
@@ -1447,14 +1457,14 @@
     {
       "parameters": {
         "content": "# Select Products",
-        "height": 608,
-        "width": 3008
+        "height": 1088,
+        "width": 3120
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -2400,
-        1552
+        -2384,
+        1536
       ],
       "id": "a10ec249-5d3f-4127-8ffa-1fecd5a9fb31",
       "name": "Sticky Note5"
@@ -1558,7 +1568,7 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        -752,
+        -736,
         2000
       ],
       "id": "a3eb2be1-34c6-4153-af6a-df3b3d27125c",
@@ -2045,7 +2055,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1088,
+        -1072,
         2000
       ],
       "id": "91447b73-4262-4cd3-938e-4114351b32d4",
@@ -3202,6 +3212,148 @@
       "typeVersion": 1,
       "id": "68b2732f-c2cc-43b0-9d78-2a8f47d5d7e3",
       "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "user_contexts",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/g8K01W3CKfGJ52es",
+          "mode": "list",
+          "value": "g8K01W3CKfGJ52es"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "senderId",
+              "keyValue": "={{ $('Extract Message').first().json.senderId }}"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "id": "uctx_menu_001",
+      "name": "Get User Context Menu",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        1584
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "user_contexts",
+          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/g8K01W3CKfGJ52es",
+          "mode": "list",
+          "value": "g8K01W3CKfGJ52es"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "senderId",
+              "keyValue": "={{ $json.senderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "selectedProduct",
+              "id": "selectedProduct",
+              "readOnly": false,
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "senderId",
+              "id": "senderId",
+              "readOnly": false,
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "selectedProduct": "BOT_PAUSED",
+            "senderId": "={{ $json.senderId }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "seller_pause_001",
+      "name": "Upsert BOT_PAUSED",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -848,
+        2288
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + ($json.access_token || '').toString().trim() }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { recipient: { id: $json.senderId }, messaging_type: 'RESPONSE', message: { text: '✅ شكراً لتواصلك!\\n\\nاكتب استفسارك وسنجيب عليك في أسرع وقت ممكن 🙏' } } }}",
+        "options": {}
+      },
+      "id": "seller_send_001",
+      "name": "Send Seller Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -512,
+        2288
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "its-cond-001",
+              "leftValue": "={{ $('Route Message').first().json.messageType }}",
+              "operator": {
+                "name": "filter.operator.equals",
+                "operation": "equals",
+                "type": "string"
+              },
+              "rightValue": "talk_to_seller"
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          }
+        },
+        "options": {}
+      },
+      "id": "is_talk_seller_001",
+      "name": "Is Talk To Seller?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1088,
+        2304
+      ]
     }
   ],
   "connections": {
@@ -3689,17 +3841,6 @@
         ]
       ]
     },
-    "Get row(s)2": {
-      "main": [
-        [
-          {
-            "node": "Show Product Menu",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Save Product Selection": {
       "main": [
         [
@@ -3941,17 +4082,6 @@
         ]
       ]
     },
-    "facebook_pages": {
-      "main": [
-        [
-          {
-            "node": "Get row(s)2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Prepare Order Data": {
       "main": [
         [
@@ -4074,11 +4204,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "OPTIONS Response - Delete": {
-      "main": [
-        []
       ]
     },
     "Validate Delete Request": {
@@ -4321,6 +4446,68 @@
           }
         ]
       ]
+    },
+    "Get row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Get User Context Menu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Context Menu": {
+      "main": [
+        [
+          {
+            "node": "Show Product Menu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert BOT_PAUSED": {
+      "main": [
+        [
+          {
+            "node": "Send Seller Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "facebook_pages": {
+      "main": [
+        [
+          {
+            "node": "Is Talk To Seller?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Talk To Seller?": {
+      "main": [
+        [
+          {
+            "node": "Upsert BOT_PAUSED",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -4380,9 +4567,9 @@
       }
     ]
   },
-  "versionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
-  "activeVersionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
-  "versionCounter": 1884,
+  "versionId": "f20eb6cc-69fa-40ec-824c-d036255aa36d",
+  "activeVersionId": "f20eb6cc-69fa-40ec-824c-d036255aa36d",
+  "versionCounter": 1917,
   "triggerCount": 11,
   "shared": [
     {
@@ -4405,9 +4592,9 @@
   ],
   "tags": [],
   "activeVersion": {
-    "updatedAt": "2026-04-15T18:50:58.653Z",
-    "createdAt": "2026-04-15T18:50:58.653Z",
-    "versionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
+    "updatedAt": "2026-04-17T19:53:38.000Z",
+    "createdAt": "2026-04-17T19:51:52.763Z",
+    "versionId": "f20eb6cc-69fa-40ec-824c-d036255aa36d",
     "workflowId": "mLbs6nBXa2B21cF6L6_MG",
     "nodes": [
       {
@@ -5295,7 +5482,7 @@
         "type": "n8n-nodes-base.dataTable",
         "typeVersion": 1,
         "position": [
-          -1056,
+          -1040,
           1776
         ],
         "id": "dcd373ef-38f8-48b0-b6f8-a5bc3dc947c5",
@@ -5322,7 +5509,7 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -928,
+          -912,
           2000
         ],
         "id": "ecf2dccc-4676-4e2b-9079-696e1cf76a5c",
@@ -5432,12 +5619,12 @@
       },
       {
         "parameters": {
-          "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId; // ✅ بدون 1\nconst userMessage = $node[\"Extract Message\"].json.input.trim();\n\n// إذا الرسالة رقم، لا ترسل القائمة\nif (/^\\d+$/.test(userMessage)) {\n  return [];\n}\n\n// جلب المنتجات من Get row(s)1\nconst products = $('Get row(s)2').all().map(item => item.json);\n\n// بناء القائمة...\nlet menuText = \"🛍️ *مرحباً بك في متجرنا!*\\n\\n\";\nmenuText += \"اختر المنتج بكتابة الرقم:\\n\";\nmenuText += \"━━━━━━━━━━━━━━━\\n\\n\";\n\nproducts.forEach((product, index) => {\n  menuText += `*${index + 1}.* ${product.name}\\n`;\n  menuText += `   💰 ${product.price} دينار\\n\\n`;\n});\n\nmenuText += \"━━━━━━━━━━━━━━━\\n\";\nmenuText += \"✍️ *اكتب رقم المنتج للطلب*\";\n\nreturn [{\n  json: {\n    recipient: { id: senderId },\n    messaging_type: \"RESPONSE\",\n    message: { text: menuText }\n  }\n}];"
+          "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId;\nconst userMessage = $node[\"Extract Message\"].json.input.trim();\n\nconst userCtxItems = $('Get User Context Menu').all();\nconst userCtx = userCtxItems.length > 0 ? userCtxItems[0].json : null;\nif (userCtx && userCtx.selectedProduct === 'BOT_PAUSED') {\n  return [];\n}\n\nif (/^\\d+$/.test(userMessage)) {\n  return [];\n}\n\nconst products = $('Get row(s)2').all().map(item => item.json);\n\nlet menuText = \"🛍️ *مرحباً بك في متجرنا!*\\n\\n\";\nmenuText += \"اختر المنتج بكتابة الرقم:\\n\";\nmenuText += \"━━━━━━━━━━━━━━━\\n\\n\";\n\nproducts.forEach((product, index) => {\n  menuText += `*${index + 1}.* ${product.name}\\n`;\n  menuText += `   💰 ${product.price} دينار\\n\\n`;\n});\n\nmenuText += \"━━━━━━━━━━━━━━━\\n\";\nmenuText += \"0️⃣ *تحدث مع البائع مباشرة* 👤\\n\\n\";\nmenuText += \"✍️ *اكتب رقم المنتج للطلب أو 0 للتحدث مع البائع*\";\n\nreturn [{\n  json: {\n    recipient: { id: senderId },\n    messaging_type: \"RESPONSE\",\n    message: { text: menuText }\n  }\n}];"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -832,
+          -528,
           1584
         ],
         "id": "016c522b-d1c0-4456-8d59-b09a5003c611",
@@ -5445,7 +5632,7 @@
       },
       {
         "parameters": {
-          "jsCode": "// const senderId = $node[\"Extract Message\"].json.senderId;\n// const message = $node[\"Extract Message\"].json.input.trim();\n\n// // تحويل الأرقام العربية للإنجليزية\n// function normalizeDigits(str) {\n//   const arabicToEnglish = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};\n//   return str.replace(/[٠-٩]/g, d => arabicToEnglish[d]);\n// }\n\n// const normalizedMessage = normalizeDigits(message);\n\n// // تحقق: هل الرسالة رقم منتج؟\n// const productNumberMatch = normalizedMessage.match(/^(\\d+)$/);\n// if (productNumberMatch) {\n//   return [{\n//     json: {\n//       senderId,\n//       selectedProductNumber: parseInt(productNumberMatch[1]) - 1,\n//       messageType: 'product_selection'\n//     }\n//   }];\n// }\n\n// // تحقق: هل الرسالة عنوان + هاتف؟\n// const phoneRegex = /((07\\d{9})|(\\+9647\\d{9}))/g;\n// const hasPhone = phoneRegex.test(normalizedMessage);\n// const phone = hasPhone ? normalizedMessage.match(phoneRegex)[0] : null;\n// const addressOnly = normalizedMessage.replace(phoneRegex, '').trim();\n// const hasAddress = addressOnly.length >= 5;\n\n// if (hasPhone && hasAddress) {\n//   return [{\n//     json: {\n//       senderId,\n//       phone,\n//       address: addressOnly,\n//       messageType: 'delivery_info'\n//     }\n//   }];\n// }\n\n// // رسالة افتراضية (عرض القائمة)\n// return [{\n//   json: {\n//     senderId,\n//     messageType: 'show_menu'\n//   }\n// }];\n\nconst senderId = $node[\"Extract Message\"].json.senderId;\nconst pageId = $node[\"Extract Message\"].json.pageId; // ✅ إضافة\nconst message = $node[\"Extract Message\"].json.input.trim();\n\nfunction normalizeDigits(str) {\n  const arabicToEnglish = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};\n  return str.replace(/[٠-٩]/g, d => arabicToEnglish[d]);\n}\n\nconst normalizedMessage = normalizeDigits(message);\n\nconst productNumberMatch = normalizedMessage.match(/^(\\d+)$/);\nif (productNumberMatch) {\n  return [{\n    json: {\n      senderId,\n      pageId, // ✅\n      selectedProductNumber: parseInt(productNumberMatch[1]) - 1,\n      messageType: 'product_selection'\n    }\n  }];\n}\n\nconst phoneRegex = /((07\\d{9})|(\\+9647\\d{9}))/g;\nconst hasPhone = phoneRegex.test(normalizedMessage);\nconst phone = hasPhone ? normalizedMessage.match(phoneRegex)[0] : null;\nconst addressOnly = normalizedMessage.replace(phoneRegex, '').trim();\nconst hasAddress = addressOnly.length >= 5;\n\nif (hasPhone && hasAddress) {\n  return [{\n    json: {\n      senderId,\n      pageId, // ✅\n      phone,\n      address: addressOnly,\n      messageType: 'delivery_info'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    senderId,\n    pageId, // ✅\n    messageType: 'show_menu'\n  }\n}];"
+          "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId;\nconst pageId = $node[\"Extract Message\"].json.pageId;\nconst message = $node[\"Extract Message\"].json.input.trim();\n\nfunction normalizeDigits(str) {\n  const arabicToEnglish = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};\n  return str.replace(/[٠-٩]/g, d => arabicToEnglish[d]);\n}\n\nconst normalizedMessage = normalizeDigits(message);\n\nif (normalizedMessage.trim() === '0') {\n  return [{ json: { senderId, pageId, messageType: 'talk_to_seller' } }];\n}\n\nconst productNumberMatch = normalizedMessage.match(/^(\\d+)$/);\nif (productNumberMatch) {\n  return [{ json: { senderId, pageId, selectedProductNumber: parseInt(productNumberMatch[1]) - 1, messageType: 'product_selection' } }];\n}\n\nconst phoneRegex = /((07\\d{9})|(\\+9647\\d{9}))/g;\nconst hasPhone = phoneRegex.test(normalizedMessage);\nconst phone = hasPhone ? normalizedMessage.match(phoneRegex)[0] : null;\nconst addressOnly = normalizedMessage.replace(phoneRegex, '').trim();\nconst hasAddress = addressOnly.length >= 5;\n\nif (hasPhone && hasAddress) {\n  return [{ json: { senderId, pageId, phone, address: addressOnly, messageType: 'delivery_info' } }];\n}\n\nreturn [{ json: { senderId, pageId, messageType: 'show_menu' } }];"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
@@ -5462,70 +5649,80 @@
             "values": [
               {
                 "conditions": {
+                  "combinator": "or",
+                  "conditions": [
+                    {
+                      "id": "show-menu-cond",
+                      "leftValue": "={{ $json.messageType }}",
+                      "operator": {
+                        "operation": "equals",
+                        "type": "string"
+                      },
+                      "rightValue": "show_menu"
+                    },
+                    {
+                      "id": "talk-seller-cond",
+                      "leftValue": "={{ $json.messageType }}",
+                      "operator": {
+                        "name": "filter.operator.equals",
+                        "operation": "equals",
+                        "type": "string"
+                      },
+                      "rightValue": "talk_to_seller"
+                    }
+                  ],
                   "options": {
                     "caseSensitive": true,
                     "leftValue": "",
                     "typeValidation": "strict",
                     "version": 3
-                  },
-                  "conditions": [
-                    {
-                      "leftValue": "={{ $json.messageType }}",
-                      "rightValue": "show_menu",
-                      "operator": {
-                        "type": "string",
-                        "operation": "equals"
-                      },
-                      "id": "6eea9891-2164-4fa8-9dda-afe13e9732ef"
-                    }
-                  ],
-                  "combinator": "and"
+                  }
                 }
               },
               {
                 "conditions": {
-                  "options": {
-                    "caseSensitive": true,
-                    "leftValue": "",
-                    "typeValidation": "strict",
-                    "version": 3
-                  },
+                  "combinator": "and",
                   "conditions": [
                     {
                       "id": "35ab3444-153f-405f-babc-3b85fd56b4f2",
                       "leftValue": "={{ $json.messageType }}",
-                      "rightValue": "product_selection",
                       "operator": {
-                        "type": "string",
+                        "name": "filter.operator.equals",
                         "operation": "equals",
-                        "name": "filter.operator.equals"
-                      }
+                        "type": "string"
+                      },
+                      "rightValue": "product_selection"
                     }
                   ],
-                  "combinator": "and"
-                }
-              },
-              {
-                "conditions": {
                   "options": {
                     "caseSensitive": true,
                     "leftValue": "",
                     "typeValidation": "strict",
                     "version": 3
-                  },
+                  }
+                }
+              },
+              {
+                "conditions": {
+                  "combinator": "and",
                   "conditions": [
                     {
                       "id": "380482fd-7f96-46ea-9afc-cde5a2f4ae4f",
                       "leftValue": "={{ $json.messageType }}",
-                      "rightValue": "delivery_info",
                       "operator": {
-                        "type": "string",
+                        "name": "filter.operator.equals",
                         "operation": "equals",
-                        "name": "filter.operator.equals"
-                      }
+                        "type": "string"
+                      },
+                      "rightValue": "delivery_info"
                     }
                   ],
-                  "combinator": "and"
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  }
                 }
               }
             ]
@@ -5590,7 +5787,7 @@
         "type": "n8n-nodes-base.dataTable",
         "typeVersion": 1,
         "position": [
-          -1040,
+          -1024,
           1584
         ],
         "id": "b379daba-db65-4209-a4c1-6d7481ed4b71",
@@ -5611,7 +5808,7 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          -608,
+          -320,
           1584
         ]
       },
@@ -5850,14 +6047,14 @@
       {
         "parameters": {
           "content": "# Select Products",
-          "height": 608,
-          "width": 3008
+          "height": 1088,
+          "width": 3120
         },
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          -2400,
-          1552
+          -2384,
+          1536
         ],
         "id": "a10ec249-5d3f-4127-8ffa-1fecd5a9fb31",
         "name": "Sticky Note5"
@@ -5961,7 +6158,7 @@
         "type": "n8n-nodes-base.dataTable",
         "typeVersion": 1.1,
         "position": [
-          -752,
+          -736,
           2000
         ],
         "id": "a3eb2be1-34c6-4153-af6a-df3b3d27125c",
@@ -6448,7 +6645,7 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -1088,
+          -1072,
           2000
         ],
         "id": "91447b73-4262-4cd3-938e-4114351b32d4",
@@ -7605,6 +7802,148 @@
         "typeVersion": 1,
         "id": "68b2732f-c2cc-43b0-9d78-2a8f47d5d7e3",
         "name": "Sticky Note11"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "cachedResultName": "user_contexts",
+            "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/g8K01W3CKfGJ52es",
+            "mode": "list",
+            "value": "g8K01W3CKfGJ52es"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "senderId",
+                "keyValue": "={{ $('Extract Message').first().json.senderId }}"
+              }
+            ]
+          },
+          "returnAll": true
+        },
+        "id": "uctx_menu_001",
+        "name": "Get User Context Menu",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1,
+        "position": [
+          -816,
+          1584
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "upsert",
+          "dataTableId": {
+            "__rl": true,
+            "cachedResultName": "user_contexts",
+            "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/g8K01W3CKfGJ52es",
+            "mode": "list",
+            "value": "g8K01W3CKfGJ52es"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "senderId",
+                "keyValue": "={{ $json.senderId }}"
+              }
+            ]
+          },
+          "columns": {
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false,
+            "mappingMode": "defineBelow",
+            "matchingColumns": [],
+            "schema": [
+              {
+                "defaultMatch": false,
+                "display": true,
+                "displayName": "selectedProduct",
+                "id": "selectedProduct",
+                "readOnly": false,
+                "removed": false,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "defaultMatch": false,
+                "display": true,
+                "displayName": "senderId",
+                "id": "senderId",
+                "readOnly": false,
+                "removed": false,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "value": {
+              "selectedProduct": "BOT_PAUSED",
+              "senderId": "={{ $json.senderId }}"
+            }
+          },
+          "options": {}
+        },
+        "id": "seller_pause_001",
+        "name": "Upsert BOT_PAUSED",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1,
+        "position": [
+          -848,
+          2288
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + ($json.access_token || '').toString().trim() }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { recipient: { id: $json.senderId }, messaging_type: 'RESPONSE', message: { text: '✅ شكراً لتواصلك!\\n\\nاكتب استفسارك وسنجيب عليك في أسرع وقت ممكن 🙏' } } }}",
+          "options": {}
+        },
+        "id": "seller_send_001",
+        "name": "Send Seller Message",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -512,
+          2288
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "its-cond-001",
+                "leftValue": "={{ $('Route Message').first().json.messageType }}",
+                "operator": {
+                  "name": "filter.operator.equals",
+                  "operation": "equals",
+                  "type": "string"
+                },
+                "rightValue": "talk_to_seller"
+              }
+            ],
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            }
+          },
+          "options": {}
+        },
+        "id": "is_talk_seller_001",
+        "name": "Is Talk To Seller?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -1088,
+          2304
+        ]
       }
     ],
     "connections": {
@@ -8092,17 +8431,6 @@
           ]
         ]
       },
-      "Get row(s)2": {
-        "main": [
-          [
-            {
-              "node": "Show Product Menu",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "Save Product Selection": {
         "main": [
           [
@@ -8344,17 +8672,6 @@
           ]
         ]
       },
-      "facebook_pages": {
-        "main": [
-          [
-            {
-              "node": "Get row(s)2",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "Prepare Order Data": {
         "main": [
           [
@@ -8477,11 +8794,6 @@
               "index": 0
             }
           ]
-        ]
-      },
-      "OPTIONS Response - Delete": {
-        "main": [
-          []
         ]
       },
       "Validate Delete Request": {
@@ -8724,27 +9036,81 @@
             }
           ]
         ]
+      },
+      "Get row(s)2": {
+        "main": [
+          [
+            {
+              "node": "Get User Context Menu",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get User Context Menu": {
+        "main": [
+          [
+            {
+              "node": "Show Product Menu",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upsert BOT_PAUSED": {
+        "main": [
+          [
+            {
+              "node": "Send Seller Message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "facebook_pages": {
+        "main": [
+          [
+            {
+              "node": "Is Talk To Seller?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is Talk To Seller?": {
+        "main": [
+          [
+            {
+              "node": "Upsert BOT_PAUSED",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Get row(s)2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Ghassan Abdullah",
-    "name": null,
-    "description": null,
-    "autosaved": false,
+    "name": "Version f20eb6cc",
+    "description": "",
+    "autosaved": true,
     "workflowPublishHistory": [
       {
-        "createdAt": "2026-04-15T18:50:59.088Z",
-        "id": 489,
+        "createdAt": "2026-04-17T19:53:38.123Z",
+        "id": 497,
         "workflowId": "mLbs6nBXa2B21cF6L6_MG",
-        "versionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
+        "versionId": "f20eb6cc-69fa-40ec-824c-d036255aa36d",
         "event": "activated",
-        "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
-      },
-      {
-        "createdAt": "2026-04-15T18:50:58.972Z",
-        "id": 488,
-        "workflowId": "mLbs6nBXa2B21cF6L6_MG",
-        "versionId": "f42463ee-a72d-4175-a0c8-a65fd5d7688e",
-        "event": "deactivated",
         "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
       }
     ]
