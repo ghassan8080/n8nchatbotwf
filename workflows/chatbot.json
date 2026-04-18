@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17T19:51:52.759Z",
+  "updatedAt": "2026-04-18T04:56:11.235Z",
   "createdAt": "2026-02-02T06:19:55.282Z",
   "id": "mLbs6nBXa2B21cF6L6_MG",
   "name": "chatbot",
@@ -1029,12 +1029,12 @@
     },
     {
       "parameters": {
-        "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId;\nconst userMessage = $node[\"Extract Message\"].json.input.trim();\n\nconst userCtxItems = $('Get User Context Menu').all();\nconst userCtx = userCtxItems.length > 0 ? userCtxItems[0].json : null;\nif (userCtx && userCtx.selectedProduct === 'BOT_PAUSED') {\n  return [];\n}\n\nif (/^\\d+$/.test(userMessage)) {\n  return [];\n}\n\nconst products = $('Get row(s)2').all().map(item => item.json);\n\nlet menuText = \"🛍️ *مرحباً بك في متجرنا!*\\n\\n\";\nmenuText += \"اختر المنتج بكتابة الرقم:\\n\";\nmenuText += \"━━━━━━━━━━━━━━━\\n\\n\";\n\nproducts.forEach((product, index) => {\n  menuText += `*${index + 1}.* ${product.name}\\n`;\n  menuText += `   💰 ${product.price} دينار\\n\\n`;\n});\n\nmenuText += \"━━━━━━━━━━━━━━━\\n\";\nmenuText += \"0️⃣ *تحدث مع البائع مباشرة* 👤\\n\\n\";\nmenuText += \"✍️ *اكتب رقم المنتج للطلب أو 0 للتحدث مع البائع*\";\n\nreturn [{\n  json: {\n    recipient: { id: senderId },\n    messaging_type: \"RESPONSE\",\n    message: { text: menuText }\n  }\n}];"
+        "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId;\nconst userMessage = $node[\"Extract Message\"].json.input.trim();\n\nconst ctxItems = $('Context Fallback').all();\nconst userCtx = ctxItems.length > 0 ? ctxItems[0].json : null;\nif (userCtx && userCtx.selectedProduct === 'BOT_PAUSED') {\n  return [];\n}\n\nif (/^\\d+$/.test(userMessage)) {\n  return [];\n}\n\nconst products = $('Get row(s)2').all().map(item => item.json);\n\nlet menuText = \"🛍️ *مرحباً بك في متجرنا!*\\n\\n\";\nmenuText += \"اختر المنتج بكتابة الرقم:\\n\";\nmenuText += \"━━━━━━━━━━━━━━━\\n\\n\";\n\nproducts.forEach((product, index) => {\n  menuText += `*${index + 1}.* ${product.name}\\n`;\n  menuText += `   💰 ${product.price} دينار\\n\\n`;\n});\n\nmenuText += \"━━━━━━━━━━━━━━━\\n\";\nmenuText += \"0️⃣ *تحدث مع البائع مباشرة* 👤\\n\\n\";\nmenuText += \"✍️ *اكتب رقم المنتج للطلب أو 0 للتحدث مع البائع*\";\n\nreturn [{\n  json: {\n    recipient: { id: senderId },\n    messaging_type: \"RESPONSE\",\n    message: { text: menuText }\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -528,
+        -448,
         1584
       ],
       "id": "016c522b-d1c0-4456-8d59-b09a5003c611",
@@ -1218,7 +1218,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -320,
+        -272,
         1584
       ]
     },
@@ -3240,7 +3240,8 @@
       "position": [
         -816,
         1584
-      ]
+      ],
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -3256,7 +3257,7 @@
           "conditions": [
             {
               "keyName": "senderId",
-              "keyValue": "={{ $json.senderId }}"
+              "keyValue": "={{ $('Route Message').first().json.senderId }}"
             }
           ]
         },
@@ -3285,11 +3286,22 @@
               "removed": false,
               "required": false,
               "type": "string"
+            },
+            {
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "page_id",
+              "id": "page_id",
+              "readOnly": false,
+              "removed": false,
+              "required": false,
+              "type": "string"
             }
           ],
           "value": {
+            "page_id": "={{ $('Route Message').first().json.pageId }}",
             "selectedProduct": "BOT_PAUSED",
-            "senderId": "={{ $json.senderId }}"
+            "senderId": "={{ $('Route Message').first().json.senderId }}"
           }
         },
         "options": {}
@@ -3306,10 +3318,10 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + ($json.access_token || '').toString().trim() }}",
+        "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + $('facebook_pages').first().json.access_token.toString().trim() }}",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ { recipient: { id: $json.senderId }, messaging_type: 'RESPONSE', message: { text: '✅ شكراً لتواصلك!\\n\\nاكتب استفسارك وسنجيب عليك في أسرع وقت ممكن 🙏' } } }}",
+        "jsonBody": "={{ { recipient: { id: $('Route Message').first().json.senderId }, messaging_type: 'RESPONSE', message: { text: '✅ شكراً لتواصلك!\\n\\nاكتب استفسارك وسنجيب عليك في أسرع وقت ممكن 🙏' } } }}",
         "options": {}
       },
       "id": "seller_send_001",
@@ -3353,6 +3365,19 @@
       "position": [
         -1088,
         2304
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n// إذا لا يوجد سياق للمستخدم → أرجع قيمة افتراضية للاستمرار\nif (items.length === 0) {\n  return [{ json: { selectedProduct: null, senderId: null, _noContext: true } }];\n}\nreturn items;"
+      },
+      "id": "ctx_fallback_001",
+      "name": "Context Fallback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        1584
       ]
     }
   ],
@@ -4458,17 +4483,6 @@
         ]
       ]
     },
-    "Get User Context Menu": {
-      "main": [
-        [
-          {
-            "node": "Show Product Menu",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Upsert BOT_PAUSED": {
       "main": [
         [
@@ -4503,6 +4517,28 @@
         [
           {
             "node": "Get row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Context Menu": {
+      "main": [
+        [
+          {
+            "node": "Context Fallback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Context Fallback": {
+      "main": [
+        [
+          {
+            "node": "Show Product Menu",
             "type": "main",
             "index": 0
           }
@@ -4567,9 +4603,9 @@
       }
     ]
   },
-  "versionId": "f20eb6cc-69fa-40ec-824c-d036255aa36d",
-  "activeVersionId": "f20eb6cc-69fa-40ec-824c-d036255aa36d",
-  "versionCounter": 1917,
+  "versionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
+  "activeVersionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
+  "versionCounter": 1941,
   "triggerCount": 11,
   "shared": [
     {
@@ -4592,9 +4628,9 @@
   ],
   "tags": [],
   "activeVersion": {
-    "updatedAt": "2026-04-17T19:53:38.000Z",
-    "createdAt": "2026-04-17T19:51:52.763Z",
-    "versionId": "f20eb6cc-69fa-40ec-824c-d036255aa36d",
+    "updatedAt": "2026-04-18T04:56:11.238Z",
+    "createdAt": "2026-04-18T04:56:11.238Z",
+    "versionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
     "workflowId": "mLbs6nBXa2B21cF6L6_MG",
     "nodes": [
       {
@@ -5619,12 +5655,12 @@
       },
       {
         "parameters": {
-          "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId;\nconst userMessage = $node[\"Extract Message\"].json.input.trim();\n\nconst userCtxItems = $('Get User Context Menu').all();\nconst userCtx = userCtxItems.length > 0 ? userCtxItems[0].json : null;\nif (userCtx && userCtx.selectedProduct === 'BOT_PAUSED') {\n  return [];\n}\n\nif (/^\\d+$/.test(userMessage)) {\n  return [];\n}\n\nconst products = $('Get row(s)2').all().map(item => item.json);\n\nlet menuText = \"🛍️ *مرحباً بك في متجرنا!*\\n\\n\";\nmenuText += \"اختر المنتج بكتابة الرقم:\\n\";\nmenuText += \"━━━━━━━━━━━━━━━\\n\\n\";\n\nproducts.forEach((product, index) => {\n  menuText += `*${index + 1}.* ${product.name}\\n`;\n  menuText += `   💰 ${product.price} دينار\\n\\n`;\n});\n\nmenuText += \"━━━━━━━━━━━━━━━\\n\";\nmenuText += \"0️⃣ *تحدث مع البائع مباشرة* 👤\\n\\n\";\nmenuText += \"✍️ *اكتب رقم المنتج للطلب أو 0 للتحدث مع البائع*\";\n\nreturn [{\n  json: {\n    recipient: { id: senderId },\n    messaging_type: \"RESPONSE\",\n    message: { text: menuText }\n  }\n}];"
+          "jsCode": "const senderId = $node[\"Extract Message\"].json.senderId;\nconst userMessage = $node[\"Extract Message\"].json.input.trim();\n\nconst ctxItems = $('Context Fallback').all();\nconst userCtx = ctxItems.length > 0 ? ctxItems[0].json : null;\nif (userCtx && userCtx.selectedProduct === 'BOT_PAUSED') {\n  return [];\n}\n\nif (/^\\d+$/.test(userMessage)) {\n  return [];\n}\n\nconst products = $('Get row(s)2').all().map(item => item.json);\n\nlet menuText = \"🛍️ *مرحباً بك في متجرنا!*\\n\\n\";\nmenuText += \"اختر المنتج بكتابة الرقم:\\n\";\nmenuText += \"━━━━━━━━━━━━━━━\\n\\n\";\n\nproducts.forEach((product, index) => {\n  menuText += `*${index + 1}.* ${product.name}\\n`;\n  menuText += `   💰 ${product.price} دينار\\n\\n`;\n});\n\nmenuText += \"━━━━━━━━━━━━━━━\\n\";\nmenuText += \"0️⃣ *تحدث مع البائع مباشرة* 👤\\n\\n\";\nmenuText += \"✍️ *اكتب رقم المنتج للطلب أو 0 للتحدث مع البائع*\";\n\nreturn [{\n  json: {\n    recipient: { id: senderId },\n    messaging_type: \"RESPONSE\",\n    message: { text: menuText }\n  }\n}];"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -528,
+          -448,
           1584
         ],
         "id": "016c522b-d1c0-4456-8d59-b09a5003c611",
@@ -5808,7 +5844,7 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          -320,
+          -272,
           1584
         ]
       },
@@ -7830,7 +7866,8 @@
         "position": [
           -816,
           1584
-        ]
+        ],
+        "alwaysOutputData": true
       },
       {
         "parameters": {
@@ -7846,7 +7883,7 @@
             "conditions": [
               {
                 "keyName": "senderId",
-                "keyValue": "={{ $json.senderId }}"
+                "keyValue": "={{ $('Route Message').first().json.senderId }}"
               }
             ]
           },
@@ -7875,11 +7912,22 @@
                 "removed": false,
                 "required": false,
                 "type": "string"
+              },
+              {
+                "defaultMatch": false,
+                "display": true,
+                "displayName": "page_id",
+                "id": "page_id",
+                "readOnly": false,
+                "removed": false,
+                "required": false,
+                "type": "string"
               }
             ],
             "value": {
+              "page_id": "={{ $('Route Message').first().json.pageId }}",
               "selectedProduct": "BOT_PAUSED",
-              "senderId": "={{ $json.senderId }}"
+              "senderId": "={{ $('Route Message').first().json.senderId }}"
             }
           },
           "options": {}
@@ -7896,10 +7944,10 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + ($json.access_token || '').toString().trim() }}",
+          "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + $('facebook_pages').first().json.access_token.toString().trim() }}",
           "sendBody": true,
           "specifyBody": "json",
-          "jsonBody": "={{ { recipient: { id: $json.senderId }, messaging_type: 'RESPONSE', message: { text: '✅ شكراً لتواصلك!\\n\\nاكتب استفسارك وسنجيب عليك في أسرع وقت ممكن 🙏' } } }}",
+          "jsonBody": "={{ { recipient: { id: $('Route Message').first().json.senderId }, messaging_type: 'RESPONSE', message: { text: '✅ شكراً لتواصلك!\\n\\nاكتب استفسارك وسنجيب عليك في أسرع وقت ممكن 🙏' } } }}",
           "options": {}
         },
         "id": "seller_send_001",
@@ -7943,6 +7991,19 @@
         "position": [
           -1088,
           2304
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\n// إذا لا يوجد سياق للمستخدم → أرجع قيمة افتراضية للاستمرار\nif (items.length === 0) {\n  return [{ json: { selectedProduct: null, senderId: null, _noContext: true } }];\n}\nreturn items;"
+        },
+        "id": "ctx_fallback_001",
+        "name": "Context Fallback",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -640,
+          1584
         ]
       }
     ],
@@ -9048,17 +9109,6 @@
           ]
         ]
       },
-      "Get User Context Menu": {
-        "main": [
-          [
-            {
-              "node": "Show Product Menu",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "Upsert BOT_PAUSED": {
         "main": [
           [
@@ -9098,19 +9148,49 @@
             }
           ]
         ]
+      },
+      "Get User Context Menu": {
+        "main": [
+          [
+            {
+              "node": "Context Fallback",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Context Fallback": {
+        "main": [
+          [
+            {
+              "node": "Show Product Menu",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Ghassan Abdullah",
-    "name": "Version f20eb6cc",
-    "description": "",
-    "autosaved": true,
+    "name": null,
+    "description": null,
+    "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2026-04-17T19:53:38.123Z",
-        "id": 497,
+        "createdAt": "2026-04-18T04:56:11.490Z",
+        "id": 511,
         "workflowId": "mLbs6nBXa2B21cF6L6_MG",
-        "versionId": "f20eb6cc-69fa-40ec-824c-d036255aa36d",
+        "versionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
         "event": "activated",
+        "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
+      },
+      {
+        "createdAt": "2026-04-18T04:56:11.387Z",
+        "id": 510,
+        "workflowId": "mLbs6nBXa2B21cF6L6_MG",
+        "versionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
+        "event": "deactivated",
         "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
       }
     ]
