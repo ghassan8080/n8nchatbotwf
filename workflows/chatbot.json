@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-18T04:56:11.235Z",
+  "updatedAt": "2026-04-26T18:07:46.714Z",
   "createdAt": "2026-02-02T06:19:55.282Z",
   "id": "mLbs6nBXa2B21cF6L6_MG",
   "name": "chatbot",
@@ -3245,22 +3245,6 @@
     },
     {
       "parameters": {
-        "operation": "upsert",
-        "dataTableId": {
-          "__rl": true,
-          "cachedResultName": "user_contexts",
-          "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/g8K01W3CKfGJ52es",
-          "mode": "list",
-          "value": "g8K01W3CKfGJ52es"
-        },
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "senderId",
-              "keyValue": "={{ $('Route Message').first().json.senderId }}"
-            }
-          ]
-        },
         "columns": {
           "attemptToConvertTypes": false,
           "convertFieldsToString": false,
@@ -3296,14 +3280,40 @@
               "removed": false,
               "required": false,
               "type": "string"
+            },
+            {
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "user_id",
+              "id": "user_id",
+              "readOnly": false,
+              "removed": false,
+              "required": false,
+              "type": "string"
             }
           ],
           "value": {
             "page_id": "={{ $('Route Message').first().json.pageId }}",
             "selectedProduct": "BOT_PAUSED",
-            "senderId": "={{ $('Route Message').first().json.senderId }}"
+            "senderId": "={{ $('Route Message').first().json.senderId }}",
+            "user_id": "={{ $('Route Message').first().json.senderId.toString().slice(-8) }}"
           }
         },
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "user_contexts",
+          "mode": "list",
+          "value": "g8K01W3CKfGJ52es"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "senderId",
+              "keyValue": "={{ $('Route Message').first().json.senderId }}"
+            }
+          ]
+        },
+        "operation": "upsert",
         "options": {}
       },
       "id": "seller_pause_001",
@@ -3379,6 +3389,290 @@
         -640,
         1584
       ]
+    },
+    {
+      "parameters": {
+        "contentType": "json",
+        "jsonBody": "={{ {\n  recipient: { id: '24643144255367432' },\n  messaging_type: 'RESPONSE',\n  message: {\n    text: '\\ud83d\\udea8 \\u0632\\u0628\\u0648\\u0646 \\u062c\\u062f\\u064a\\u062f \\u064a\\u0631\\u064a\\u062f \\u0627\\u0644\\u062a\\u062d\\u062f\\u062b \\u0645\\u0639\\u0643 \\u0645\\u0628\\u0627\\u0634\\u0631\\u0629!\\n\\n\\ud83d\\udc64 ID: ' + $('Route Message').first().json.senderId + '\\n\\ud83d\\udd17 \\u0627\\u0644\\u0645\\u062d\\u0627\\u062f\\u062b\\u0629:\\nhttps://www.facebook.com/messages/t/' + $('Route Message').first().json.senderId\n  }\n} }}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + $('facebook_pages').first().json.access_token.toString().trim() }}"
+      },
+      "id": "notify_seller_001",
+      "name": "Notify Seller via Messenger",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -208,
+        2288
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "path": "chat-requests",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "chat_req_webhook_001",
+      "name": "GET /chat-requests",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -2080,
+        2768
+      ],
+      "webhookId": "91213379-3280-468f-8b3b-011c825eb6e3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cors-check-cr",
+              "leftValue": "={{ $json.headers['access-control-request-method'] }}",
+              "operator": {
+                "operation": "exists",
+                "type": "string"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          }
+        },
+        "options": {}
+      },
+      "id": "chat_req_opts_001",
+      "name": "CORS chat-requests",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1840,
+        2768
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "noData",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET,OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type,Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "id": "chat_req_opts_res_001",
+      "name": "OPTIONS chat-requests",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -1616,
+        2672
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "user_contexts",
+          "mode": "list",
+          "value": "g8K01W3CKfGJ52es"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "selectedProduct",
+              "keyValue": "BOT_PAUSED"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "id": "chat_req_fetch_001",
+      "name": "Fetch Chat Requests",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -1616,
+        2864
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const chatItems = $('Fetch Chat Requests').all();\nconst fbPages = $('Get FB Pages For Chat').all();\nconst customerInfo = $input.all();\n\n// page_id → access_token\nconst pageTokenMap = {};\nfbPages.forEach(p => {\n  const pid = p.json.page_id?.toString().trim();\n  if (pid && p.json.access_token) pageTokenMap[pid] = p.json.access_token;\n});\n\n// senderId → name (from Graph API node)\nconst nameMap = {};\ncustomerInfo.forEach(c => {\n  if (c.json.id && c.json.name) nameMap[c.json.id] = c.json.name;\n});\n\nconst requests = chatItems.map(item => {\n  const senderId = item.json.senderId;\n  const pageId = item.json.page_id?.toString().trim();\n  const customerName = nameMap[senderId] || ('...' + (senderId ? senderId.slice(-6) : 'زبون'));\n\n  return {\n    id: item.json.id,\n    senderId,\n    page_id: pageId,\n    customerName,\n    requestedAt: item.json.updatedAt,\n    status: 'waiting',\n    messengerLink: `https://www.facebook.com/messages/t/${senderId}`\n  };\n});\n\nreturn [{ json: { success: true, count: requests.length, chat_requests: requests } }];\n"
+      },
+      "id": "chat_req_format_001",
+      "name": "Format Chat Requests",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1392,
+        2864
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "id": "chat_req_respond_001",
+      "name": "Respond Chat Requests",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -1168,
+        2864
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dismiss-chat-request",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "chat_req_dismiss_webhook_001",
+      "name": "POST /dismiss-chat-request",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -3424,
+        2784
+      ],
+      "webhookId": "4d5ffd54-f279-4cda-8705-1953eefc1d1e"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "user_contexts",
+          "mode": "list",
+          "value": "g8K01W3CKfGJ52es"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "senderId",
+              "keyValue": "={{ $json.body.senderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "selectedProduct": ""
+          }
+        },
+        "options": {}
+      },
+      "id": "chat_req_dismiss_001",
+      "name": "Clear BOT_PAUSED",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -3136,
+        2784
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: true, message: 'Bot resumed for user' } }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "chat_req_dismiss_res_001",
+      "name": "Respond Dismiss",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -2912,
+        2784
+      ]
+    },
+    {
+      "id": "get_fb_pages_for_chat_001",
+      "name": "Get FB Pages For Chat",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -3264,
+        2700
+      ],
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "facebook_pages",
+          "mode": "list",
+          "value": "OlvM9mLeb7K9kr0J"
+        },
+        "operation": "get",
+        "returnAll": true
+      }
+    },
+    {
+      "id": "get_customer_name_001",
+      "name": "Get Customer Name from FB",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3040,
+        2700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ 'https://graph.facebook.com/v17.0/' + $('Fetch Chat Requests').first().json.senderId + '?fields=name&access_token=' + $input.first().json.access_token }}",
+        "options": {},
+        "sendHeaders": false
+      },
+      "continueOnFail": true
     }
   ],
   "connections": {
@@ -4544,6 +4838,112 @@
           }
         ]
       ]
+    },
+    "Send Seller Message": {
+      "main": [
+        [
+          {
+            "node": "Notify Seller via Messenger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET /chat-requests": {
+      "main": [
+        [
+          {
+            "node": "CORS chat-requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CORS chat-requests": {
+      "main": [
+        [
+          {
+            "node": "OPTIONS chat-requests",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch Chat Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Chat Requests": {
+      "main": [
+        [
+          {
+            "node": "Respond Chat Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST /dismiss-chat-request": {
+      "main": [
+        [
+          {
+            "node": "Clear BOT_PAUSED",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clear BOT_PAUSED": {
+      "main": [
+        [
+          {
+            "node": "Respond Dismiss",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Chat Requests": {
+      "main": [
+        [
+          {
+            "node": "Get FB Pages For Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get FB Pages For Chat": {
+      "main": [
+        [
+          {
+            "node": "Get Customer Name from FB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Customer Name from FB": {
+      "main": [
+        [
+          {
+            "node": "Format Chat Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -4603,10 +5003,10 @@
       }
     ]
   },
-  "versionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
-  "activeVersionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
-  "versionCounter": 1941,
-  "triggerCount": 11,
+  "versionId": "e1396aa7-2a66-441b-a1b0-274267f488d8",
+  "activeVersionId": "e1396aa7-2a66-441b-a1b0-274267f488d8",
+  "versionCounter": 1976,
+  "triggerCount": 13,
   "shared": [
     {
       "updatedAt": "2026-02-02T06:19:55.286Z",
@@ -4628,9 +5028,9 @@
   ],
   "tags": [],
   "activeVersion": {
-    "updatedAt": "2026-04-18T04:56:11.238Z",
-    "createdAt": "2026-04-18T04:56:11.238Z",
-    "versionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
+    "updatedAt": "2026-04-26T18:07:46.717Z",
+    "createdAt": "2026-04-26T18:07:46.717Z",
+    "versionId": "e1396aa7-2a66-441b-a1b0-274267f488d8",
     "workflowId": "mLbs6nBXa2B21cF6L6_MG",
     "nodes": [
       {
@@ -7871,22 +8271,6 @@
       },
       {
         "parameters": {
-          "operation": "upsert",
-          "dataTableId": {
-            "__rl": true,
-            "cachedResultName": "user_contexts",
-            "cachedResultUrl": "/projects/Gh79LIqq97SfPCAc/datatables/g8K01W3CKfGJ52es",
-            "mode": "list",
-            "value": "g8K01W3CKfGJ52es"
-          },
-          "filters": {
-            "conditions": [
-              {
-                "keyName": "senderId",
-                "keyValue": "={{ $('Route Message').first().json.senderId }}"
-              }
-            ]
-          },
           "columns": {
             "attemptToConvertTypes": false,
             "convertFieldsToString": false,
@@ -7922,14 +8306,40 @@
                 "removed": false,
                 "required": false,
                 "type": "string"
+              },
+              {
+                "defaultMatch": false,
+                "display": true,
+                "displayName": "user_id",
+                "id": "user_id",
+                "readOnly": false,
+                "removed": false,
+                "required": false,
+                "type": "string"
               }
             ],
             "value": {
               "page_id": "={{ $('Route Message').first().json.pageId }}",
               "selectedProduct": "BOT_PAUSED",
-              "senderId": "={{ $('Route Message').first().json.senderId }}"
+              "senderId": "={{ $('Route Message').first().json.senderId }}",
+              "user_id": "={{ $('Route Message').first().json.senderId.toString().slice(-8) }}"
             }
           },
+          "dataTableId": {
+            "__rl": true,
+            "cachedResultName": "user_contexts",
+            "mode": "list",
+            "value": "g8K01W3CKfGJ52es"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "senderId",
+                "keyValue": "={{ $('Route Message').first().json.senderId }}"
+              }
+            ]
+          },
+          "operation": "upsert",
           "options": {}
         },
         "id": "seller_pause_001",
@@ -8005,6 +8415,290 @@
           -640,
           1584
         ]
+      },
+      {
+        "parameters": {
+          "contentType": "json",
+          "jsonBody": "={{ {\n  recipient: { id: '24643144255367432' },\n  messaging_type: 'RESPONSE',\n  message: {\n    text: '\\ud83d\\udea8 \\u0632\\u0628\\u0648\\u0646 \\u062c\\u062f\\u064a\\u062f \\u064a\\u0631\\u064a\\u062f \\u0627\\u0644\\u062a\\u062d\\u062f\\u062b \\u0645\\u0639\\u0643 \\u0645\\u0628\\u0627\\u0634\\u0631\\u0629!\\n\\n\\ud83d\\udc64 ID: ' + $('Route Message').first().json.senderId + '\\n\\ud83d\\udd17 \\u0627\\u0644\\u0645\\u062d\\u0627\\u062f\\u062b\\u0629:\\nhttps://www.facebook.com/messages/t/' + $('Route Message').first().json.senderId\n  }\n} }}",
+          "method": "POST",
+          "options": {},
+          "sendBody": true,
+          "specifyBody": "json",
+          "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + $('facebook_pages').first().json.access_token.toString().trim() }}"
+        },
+        "id": "notify_seller_001",
+        "name": "Notify Seller via Messenger",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -208,
+          2288
+        ],
+        "continueOnFail": true
+      },
+      {
+        "parameters": {
+          "path": "chat-requests",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "chat_req_webhook_001",
+        "name": "GET /chat-requests",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -2080,
+          2768
+        ],
+        "webhookId": "91213379-3280-468f-8b3b-011c825eb6e3"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "cors-check-cr",
+                "leftValue": "={{ $json.headers['access-control-request-method'] }}",
+                "operator": {
+                  "operation": "exists",
+                  "type": "string"
+                },
+                "rightValue": ""
+              }
+            ],
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            }
+          },
+          "options": {}
+        },
+        "id": "chat_req_opts_001",
+        "name": "CORS chat-requests",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -1840,
+          2768
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "noData",
+          "options": {
+            "responseCode": 200,
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "name": "Access-Control-Allow-Methods",
+                  "value": "GET,OPTIONS"
+                },
+                {
+                  "name": "Access-Control-Allow-Headers",
+                  "value": "Content-Type,Authorization"
+                }
+              ]
+            }
+          }
+        },
+        "id": "chat_req_opts_res_001",
+        "name": "OPTIONS chat-requests",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          -1616,
+          2672
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "cachedResultName": "user_contexts",
+            "mode": "list",
+            "value": "g8K01W3CKfGJ52es"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "selectedProduct",
+                "keyValue": "BOT_PAUSED"
+              }
+            ]
+          },
+          "returnAll": true
+        },
+        "id": "chat_req_fetch_001",
+        "name": "Fetch Chat Requests",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1,
+        "position": [
+          -1616,
+          2864
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const chatItems = $('Fetch Chat Requests').all();\nconst fbPages = $('Get FB Pages For Chat').all();\nconst customerInfo = $input.all();\n\n// page_id → access_token\nconst pageTokenMap = {};\nfbPages.forEach(p => {\n  const pid = p.json.page_id?.toString().trim();\n  if (pid && p.json.access_token) pageTokenMap[pid] = p.json.access_token;\n});\n\n// senderId → name (from Graph API node)\nconst nameMap = {};\ncustomerInfo.forEach(c => {\n  if (c.json.id && c.json.name) nameMap[c.json.id] = c.json.name;\n});\n\nconst requests = chatItems.map(item => {\n  const senderId = item.json.senderId;\n  const pageId = item.json.page_id?.toString().trim();\n  const customerName = nameMap[senderId] || ('...' + (senderId ? senderId.slice(-6) : 'زبون'));\n\n  return {\n    id: item.json.id,\n    senderId,\n    page_id: pageId,\n    customerName,\n    requestedAt: item.json.updatedAt,\n    status: 'waiting',\n    messengerLink: `https://www.facebook.com/messages/t/${senderId}`\n  };\n});\n\nreturn [{ json: { success: true, count: requests.length, chat_requests: requests } }];\n"
+        },
+        "id": "chat_req_format_001",
+        "name": "Format Chat Requests",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -1392,
+          2864
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ $json }}",
+          "options": {
+            "responseCode": 200,
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "name": "Content-Type",
+                  "value": "application/json"
+                }
+              ]
+            }
+          }
+        },
+        "id": "chat_req_respond_001",
+        "name": "Respond Chat Requests",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          -1168,
+          2864
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "dismiss-chat-request",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "chat_req_dismiss_webhook_001",
+        "name": "POST /dismiss-chat-request",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -3424,
+          2784
+        ],
+        "webhookId": "4d5ffd54-f279-4cda-8705-1953eefc1d1e"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dataTableId": {
+            "__rl": true,
+            "cachedResultName": "user_contexts",
+            "mode": "list",
+            "value": "g8K01W3CKfGJ52es"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "senderId",
+                "keyValue": "={{ $json.body.senderId }}"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "selectedProduct": ""
+            }
+          },
+          "options": {}
+        },
+        "id": "chat_req_dismiss_001",
+        "name": "Clear BOT_PAUSED",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1,
+        "position": [
+          -3136,
+          2784
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: true, message: 'Bot resumed for user' } }}",
+          "options": {
+            "responseCode": 200,
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ]
+            }
+          }
+        },
+        "id": "chat_req_dismiss_res_001",
+        "name": "Respond Dismiss",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          -2912,
+          2784
+        ]
+      },
+      {
+        "id": "get_fb_pages_for_chat_001",
+        "name": "Get FB Pages For Chat",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1,
+        "position": [
+          -3264,
+          2700
+        ],
+        "parameters": {
+          "dataTableId": {
+            "__rl": true,
+            "cachedResultName": "facebook_pages",
+            "mode": "list",
+            "value": "OlvM9mLeb7K9kr0J"
+          },
+          "operation": "get",
+          "returnAll": true
+        }
+      },
+      {
+        "id": "get_customer_name_001",
+        "name": "Get Customer Name from FB",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -3040,
+          2700
+        ],
+        "parameters": {
+          "method": "GET",
+          "url": "={{ 'https://graph.facebook.com/v17.0/' + $('Fetch Chat Requests').first().json.senderId + '?fields=name&access_token=' + $input.first().json.access_token }}",
+          "options": {},
+          "sendHeaders": false
+        },
+        "continueOnFail": true
       }
     ],
     "connections": {
@@ -9170,6 +9864,112 @@
             }
           ]
         ]
+      },
+      "Send Seller Message": {
+        "main": [
+          [
+            {
+              "node": "Notify Seller via Messenger",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GET /chat-requests": {
+        "main": [
+          [
+            {
+              "node": "CORS chat-requests",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CORS chat-requests": {
+        "main": [
+          [
+            {
+              "node": "OPTIONS chat-requests",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Fetch Chat Requests",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format Chat Requests": {
+        "main": [
+          [
+            {
+              "node": "Respond Chat Requests",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "POST /dismiss-chat-request": {
+        "main": [
+          [
+            {
+              "node": "Clear BOT_PAUSED",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Clear BOT_PAUSED": {
+        "main": [
+          [
+            {
+              "node": "Respond Dismiss",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch Chat Requests": {
+        "main": [
+          [
+            {
+              "node": "Get FB Pages For Chat",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get FB Pages For Chat": {
+        "main": [
+          [
+            {
+              "node": "Get Customer Name from FB",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Customer Name from FB": {
+        "main": [
+          [
+            {
+              "node": "Format Chat Requests",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Ghassan Abdullah",
@@ -9178,18 +9978,18 @@
     "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2026-04-18T04:56:11.490Z",
-        "id": 511,
+        "createdAt": "2026-04-26T18:07:47.222Z",
+        "id": 533,
         "workflowId": "mLbs6nBXa2B21cF6L6_MG",
-        "versionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
+        "versionId": "e1396aa7-2a66-441b-a1b0-274267f488d8",
         "event": "activated",
         "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
       },
       {
-        "createdAt": "2026-04-18T04:56:11.387Z",
-        "id": 510,
+        "createdAt": "2026-04-26T18:07:47.110Z",
+        "id": 532,
         "workflowId": "mLbs6nBXa2B21cF6L6_MG",
-        "versionId": "be23546f-e226-41f5-95bc-f5ce72da192a",
+        "versionId": "e1396aa7-2a66-441b-a1b0-274267f488d8",
         "event": "deactivated",
         "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
       }
