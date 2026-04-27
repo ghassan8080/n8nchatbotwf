@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-26T18:07:46.714Z",
+  "updatedAt": "2026-04-27T04:51:42.566Z",
   "createdAt": "2026-02-02T06:19:55.282Z",
   "id": "mLbs6nBXa2B21cF6L6_MG",
   "name": "chatbot",
@@ -3245,6 +3245,21 @@
     },
     {
       "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "user_contexts",
+          "mode": "list",
+          "value": "g8K01W3CKfGJ52es"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "senderId",
+              "keyValue": "={{ $('Route Message').first().json.senderId }}"
+            }
+          ]
+        },
         "columns": {
           "attemptToConvertTypes": false,
           "convertFieldsToString": false,
@@ -3299,21 +3314,6 @@
             "user_id": "={{ $('Route Message').first().json.senderId.toString().slice(-8) }}"
           }
         },
-        "dataTableId": {
-          "__rl": true,
-          "cachedResultName": "user_contexts",
-          "mode": "list",
-          "value": "g8K01W3CKfGJ52es"
-        },
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "senderId",
-              "keyValue": "={{ $('Route Message').first().json.senderId }}"
-            }
-          ]
-        },
-        "operation": "upsert",
         "options": {}
       },
       "id": "seller_pause_001",
@@ -3392,13 +3392,12 @@
     },
     {
       "parameters": {
-        "contentType": "json",
-        "jsonBody": "={{ {\n  recipient: { id: '24643144255367432' },\n  messaging_type: 'RESPONSE',\n  message: {\n    text: '\\ud83d\\udea8 \\u0632\\u0628\\u0648\\u0646 \\u062c\\u062f\\u064a\\u062f \\u064a\\u0631\\u064a\\u062f \\u0627\\u0644\\u062a\\u062d\\u062f\\u062b \\u0645\\u0639\\u0643 \\u0645\\u0628\\u0627\\u0634\\u0631\\u0629!\\n\\n\\ud83d\\udc64 ID: ' + $('Route Message').first().json.senderId + '\\n\\ud83d\\udd17 \\u0627\\u0644\\u0645\\u062d\\u0627\\u062f\\u062b\\u0629:\\nhttps://www.facebook.com/messages/t/' + $('Route Message').first().json.senderId\n  }\n} }}",
         "method": "POST",
-        "options": {},
+        "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + $('facebook_pages').first().json.access_token.toString().trim() }}",
         "sendBody": true,
         "specifyBody": "json",
-        "url": "={{ 'https://graph.facebook.com/v17.0/me/messages?access_token=' + $('facebook_pages').first().json.access_token.toString().trim() }}"
+        "jsonBody": "={{ {\n  recipient: { id: '24643144255367432' },\n  messaging_type: 'RESPONSE',\n  message: {\n    text: '\\ud83d\\udea8 \\u0632\\u0628\\u0648\\u0646 \\u062c\\u062f\\u064a\\u062f \\u064a\\u0631\\u064a\\u062f \\u0627\\u0644\\u062a\\u062d\\u062f\\u062b \\u0645\\u0639\\u0643 \\u0645\\u0628\\u0627\\u0634\\u0631\\u0629!\\n\\n\\ud83d\\udc64 ID: ' + $('Route Message').first().json.senderId + '\\n\\ud83d\\udd17 \\u0627\\u0644\\u0645\\u062d\\u0627\\u062f\\u062b\\u0629:\\nhttps://www.facebook.com/messages/t/' + $('Route Message').first().json.senderId\n  }\n} }}",
+        "options": {}
       },
       "id": "notify_seller_001",
       "name": "Notify Seller via Messenger",
@@ -3421,8 +3420,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -2080,
-        2768
+        -1952,
+        2896
       ],
       "webhookId": "91213379-3280-468f-8b3b-011c825eb6e3"
     },
@@ -3455,8 +3454,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        -1840,
-        2768
+        -1712,
+        2896
       ]
     },
     {
@@ -3487,8 +3486,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        -1616,
-        2672
+        -1344,
+        2704
       ]
     },
     {
@@ -3515,8 +3514,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -1616,
-        2864
+        -1328,
+        2912
       ]
     },
     {
@@ -3528,8 +3527,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1392,
-        2864
+        -448,
+        2912
       ]
     },
     {
@@ -3557,8 +3556,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        -1168,
-        2864
+        -224,
+        2912
       ]
     },
     {
@@ -3573,8 +3572,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -3424,
-        2784
+        -1328,
+        3328
       ],
       "webhookId": "4d5ffd54-f279-4cda-8705-1953eefc1d1e"
     },
@@ -3608,8 +3607,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -3136,
-        2784
+        -1040,
+        3328
       ]
     },
     {
@@ -3633,46 +3632,59 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        -2912,
-        2784
+        -816,
+        3328
       ]
     },
     {
-      "id": "get_fb_pages_for_chat_001",
-      "name": "Get FB Pages For Chat",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1,
-      "position": [
-        -3264,
-        2700
-      ],
       "parameters": {
+        "operation": "get",
         "dataTableId": {
           "__rl": true,
           "cachedResultName": "facebook_pages",
           "mode": "list",
           "value": "OlvM9mLeb7K9kr0J"
         },
-        "operation": "get",
         "returnAll": true
-      }
+      },
+      "id": "get_fb_pages_for_chat_001",
+      "name": "Get FB Pages For Chat",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -976,
+        2912
+      ]
     },
     {
+      "parameters": {
+        "url": "={{ 'https://graph.facebook.com/v17.0/' + $('Fetch Chat Requests').first().json.senderId + '?fields=name&access_token=' + $input.first().json.access_token }}",
+        "options": {}
+      },
       "id": "get_customer_name_001",
       "name": "Get Customer Name from FB",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -3040,
-        2700
+        -688,
+        2912
       ],
-      "parameters": {
-        "method": "GET",
-        "url": "={{ 'https://graph.facebook.com/v17.0/' + $('Fetch Chat Requests').first().json.senderId + '?fields=name&access_token=' + $input.first().json.access_token }}",
-        "options": {},
-        "sendHeaders": false
-      },
       "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "# GET /chat-requests",
+        "height": 896,
+        "width": 2736
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2368,
+        2656
+      ],
+      "id": "cecfb11c-85fd-466f-a819-4f4427a38342",
+      "name": "Sticky Note12"
     }
   ],
   "connections": {
@@ -5003,9 +5015,9 @@
       }
     ]
   },
-  "versionId": "e1396aa7-2a66-441b-a1b0-274267f488d8",
+  "versionId": "04f3b6c7-a7b1-44dc-a3ea-dcdaf8f45a0e",
   "activeVersionId": "e1396aa7-2a66-441b-a1b0-274267f488d8",
-  "versionCounter": 1976,
+  "versionCounter": 2010,
   "triggerCount": 13,
   "shared": [
     {
