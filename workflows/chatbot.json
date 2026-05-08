@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-27T04:51:42.566Z",
+  "updatedAt": "2026-05-08T18:28:15.670Z",
   "createdAt": "2026-02-02T06:19:55.282Z",
   "id": "mLbs6nBXa2B21cF6L6_MG",
   "name": "chatbot",
@@ -3685,6 +3685,59 @@
       ],
       "id": "cecfb11c-85fd-466f-a819-4f4427a38342",
       "name": "Sticky Note12"
+    },
+    {
+      "id": "comment_router_001",
+      "name": "Is Comment Event?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -4400,
+        1760
+      ],
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "comment-check-001",
+              "leftValue": "={{ $json.body?.entry?.[0]?.changes?.[0]?.value?.item }}",
+              "operator": {
+                "name": "filter.operator.equals",
+                "operation": "equals",
+                "type": "string"
+              },
+              "rightValue": "comment"
+            }
+          ],
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "forward_to_comments_001",
+      "name": "Forward to Comment Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4160,
+        1660
+      ],
+      "parameters": {
+        "body": "={{ $('Messenger Webhook1').first().json.body }}",
+        "contentType": "json",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://n8n-n8n.17m6co.easypanel.host/webhook/meta-comments"
+      },
+      "continueOnFail": true
     }
   ],
   "connections": {
@@ -3984,6 +4037,11 @@
         [
           {
             "node": "Respond to Webhook - Verification1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Is Comment Event?",
             "type": "main",
             "index": 0
           }
@@ -4956,6 +5014,29 @@
           }
         ]
       ]
+    },
+    "Is Comment Event?": {
+      "main": [
+        [
+          {
+            "node": "Forward to Comment Reply",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook - Verification1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Extract Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -5015,9 +5096,9 @@
       }
     ]
   },
-  "versionId": "04f3b6c7-a7b1-44dc-a3ea-dcdaf8f45a0e",
-  "activeVersionId": "04f3b6c7-a7b1-44dc-a3ea-dcdaf8f45a0e",
-  "versionCounter": 2012,
+  "versionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
+  "activeVersionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
+  "versionCounter": 2015,
   "triggerCount": 13,
   "shared": [
     {
@@ -5040,9 +5121,9 @@
   ],
   "tags": [],
   "activeVersion": {
-    "updatedAt": "2026-04-28T09:28:27.000Z",
-    "createdAt": "2026-04-27T04:51:42.568Z",
-    "versionId": "04f3b6c7-a7b1-44dc-a3ea-dcdaf8f45a0e",
+    "updatedAt": "2026-05-08T18:28:15.674Z",
+    "createdAt": "2026-05-08T18:28:15.674Z",
+    "versionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
     "workflowId": "mLbs6nBXa2B21cF6L6_MG",
     "nodes": [
       {
@@ -8723,6 +8804,59 @@
         ],
         "id": "cecfb11c-85fd-466f-a819-4f4427a38342",
         "name": "Sticky Note12"
+      },
+      {
+        "id": "comment_router_001",
+        "name": "Is Comment Event?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -4400,
+          1760
+        ],
+        "parameters": {
+          "conditions": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "comment-check-001",
+                "leftValue": "={{ $json.body?.entry?.[0]?.changes?.[0]?.value?.item }}",
+                "operator": {
+                  "name": "filter.operator.equals",
+                  "operation": "equals",
+                  "type": "string"
+                },
+                "rightValue": "comment"
+              }
+            ],
+            "options": {
+              "caseSensitive": false,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "forward_to_comments_001",
+        "name": "Forward to Comment Reply",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -4160,
+          1660
+        ],
+        "parameters": {
+          "body": "={{ $('Messenger Webhook1').first().json.body }}",
+          "contentType": "json",
+          "method": "POST",
+          "options": {},
+          "sendBody": true,
+          "specifyBody": "json",
+          "url": "https://n8n-n8n.17m6co.easypanel.host/webhook/meta-comments"
+        },
+        "continueOnFail": true
       }
     ],
     "connections": {
@@ -9022,6 +9156,11 @@
           [
             {
               "node": "Respond to Webhook - Verification1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Is Comment Event?",
               "type": "main",
               "index": 0
             }
@@ -9994,19 +10133,50 @@
             }
           ]
         ]
+      },
+      "Is Comment Event?": {
+        "main": [
+          [
+            {
+              "node": "Forward to Comment Reply",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Respond to Webhook - Verification1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Extract Message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Ghassan Abdullah",
-    "name": "Version 04f3b6c7",
-    "description": "",
-    "autosaved": true,
+    "name": null,
+    "description": null,
+    "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2026-04-28T09:28:27.914Z",
-        "id": 535,
+        "createdAt": "2026-05-08T18:28:15.930Z",
+        "id": 574,
         "workflowId": "mLbs6nBXa2B21cF6L6_MG",
-        "versionId": "04f3b6c7-a7b1-44dc-a3ea-dcdaf8f45a0e",
+        "versionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
         "event": "activated",
+        "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
+      },
+      {
+        "createdAt": "2026-05-08T18:28:15.818Z",
+        "id": 573,
+        "workflowId": "mLbs6nBXa2B21cF6L6_MG",
+        "versionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
+        "event": "deactivated",
         "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
       }
     ]
