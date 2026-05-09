@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-08T18:28:15.670Z",
+  "updatedAt": "2026-05-09T03:48:46.923Z",
   "createdAt": "2026-02-02T06:19:55.282Z",
   "id": "mLbs6nBXa2B21cF6L6_MG",
   "name": "chatbot",
@@ -849,8 +849,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -2368,
-        1760
+        -2192,
+        2240
       ],
       "webhookId": "534ab459-17b2-449d-b4cb-9f8b2f962fc5"
     },
@@ -863,8 +863,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        -2080,
-        1600
+        -1712,
+        2224
       ],
       "id": "f30225fa-2697-4fa7-8d7b-b57c7fc4521a",
       "name": "Respond to Webhook - Verification1"
@@ -908,7 +908,7 @@
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
       "position": [
-        -2192,
+        -2208,
         1776
       ]
     },
@@ -1463,7 +1463,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -2384,
+        -2304,
         1536
       ],
       "id": "a10ec249-5d3f-4127-8ffa-1fecd5a9fb31",
@@ -1741,8 +1741,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -3152,
-        1776
+        -3200,
+        1824
       ],
       "id": "45c38bf5-6163-41af-9d15-4cbccd8f60ff",
       "name": "Extract User Record"
@@ -1756,8 +1756,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        -2704,
-        2000
+        -2896,
+        2016
       ],
       "id": "bd8c690b-a79b-4564-b092-63e1774a8328",
       "name": "Respond - Auth Error"
@@ -1772,8 +1772,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -3952,
-        1872
+        -3984,
+        2000
       ],
       "id": "4c03a67a-1977-4f22-8217-18683b201d0a",
       "name": "POST /login1",
@@ -1787,7 +1787,7 @@
       "typeVersion": 2,
       "position": [
         -3760,
-        1872
+        2000
       ],
       "id": "e5650cd2-151f-4243-8f8f-60eae7944f81",
       "name": "Validate Credentials1"
@@ -1814,8 +1814,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -3520,
-        1872
+        -3552,
+        2000
       ],
       "id": "2da597c1-5f92-41f3-b215-1eca40c0ecf0",
       "name": "Get User from DB1"
@@ -1848,8 +1848,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -3312,
-        1872
+        -3344,
+        2000
       ],
       "id": "5ec853fb-119a-4c72-a65d-c30f2554f353",
       "name": "User Exists?1"
@@ -1861,8 +1861,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2784,
-        1776
+        -2832,
+        1824
       ],
       "id": "0519a95f-9a60-40e7-9a82-9f70dd7af635",
       "name": "Verify Password & Generate Token1"
@@ -1876,8 +1876,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        -2592,
-        1776
+        -2640,
+        1824
       ],
       "id": "8636c6e5-dec9-4208-b070-437914a661dd",
       "name": "Respond Success1"
@@ -1891,8 +1891,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        -2976,
-        2000
+        -3120,
+        2016
       ],
       "id": "e9a38b56-113d-4963-99d0-f29043ca8a39",
       "name": "Respond - User Not Found1"
@@ -2944,8 +2944,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2976,
-        1776
+        -3008,
+        1824
       ],
       "id": "c5e99250-a75f-45f6-8736-c39e383c6ce8",
       "name": "Check Account Status"
@@ -3687,14 +3687,6 @@
       "name": "Sticky Note12"
     },
     {
-      "id": "comment_router_001",
-      "name": "Is Comment Event?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
-      "position": [
-        -4400,
-        1760
-      ],
       "parameters": {
         "conditions": {
           "combinator": "and",
@@ -3716,27 +3708,34 @@
             "typeValidation": "loose",
             "version": 2
           }
-        }
-      }
+        },
+        "options": {}
+      },
+      "id": "comment_router_001",
+      "name": "Is Comment Event?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -2016,
+        2016
+      ]
     },
     {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n-n8n.17m6co.easypanel.host/webhook/meta-comments",
+        "sendBody": true,
+        "specifyBody": "json",
+        "options": {}
+      },
       "id": "forward_to_comments_001",
       "name": "Forward to Comment Reply",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -4160,
-        1660
+        -1728,
+        2000
       ],
-      "parameters": {
-        "body": "={{ $('Messenger Webhook1').first().json.body }}",
-        "contentType": "json",
-        "method": "POST",
-        "options": {},
-        "sendBody": true,
-        "specifyBody": "json",
-        "url": "https://n8n-n8n.17m6co.easypanel.host/webhook/meta-comments"
-      },
       "continueOnFail": true
     }
   ],
@@ -5041,7 +5040,7 @@
   },
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": true,
+    "availableInMCP": false,
     "timeSavedMode": "fixed",
     "timezone": "Asia/Baghdad",
     "callerPolicy": "workflowsFromSameOwner",
@@ -5096,9 +5095,9 @@
       }
     ]
   },
-  "versionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
-  "activeVersionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
-  "versionCounter": 2015,
+  "versionId": "1da11b1d-c0dd-4e93-aab7-2bee4537f8a1",
+  "activeVersionId": "1da11b1d-c0dd-4e93-aab7-2bee4537f8a1",
+  "versionCounter": 2067,
   "triggerCount": 13,
   "shared": [
     {
@@ -5121,9 +5120,9 @@
   ],
   "tags": [],
   "activeVersion": {
-    "updatedAt": "2026-05-08T18:28:15.674Z",
-    "createdAt": "2026-05-08T18:28:15.674Z",
-    "versionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
+    "updatedAt": "2026-05-09T03:48:56.000Z",
+    "createdAt": "2026-05-09T03:48:46.925Z",
+    "versionId": "1da11b1d-c0dd-4e93-aab7-2bee4537f8a1",
     "workflowId": "mLbs6nBXa2B21cF6L6_MG",
     "nodes": [
       {
@@ -5968,8 +5967,8 @@
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2.1,
         "position": [
-          -2368,
-          1760
+          -2192,
+          2240
         ],
         "webhookId": "534ab459-17b2-449d-b4cb-9f8b2f962fc5"
       },
@@ -5982,8 +5981,8 @@
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1.4,
         "position": [
-          -2080,
-          1600
+          -1712,
+          2224
         ],
         "id": "f30225fa-2697-4fa7-8d7b-b57c7fc4521a",
         "name": "Respond to Webhook - Verification1"
@@ -6027,7 +6026,7 @@
         "type": "n8n-nodes-base.function",
         "typeVersion": 1,
         "position": [
-          -2192,
+          -2208,
           1776
         ]
       },
@@ -6582,7 +6581,7 @@
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          -2384,
+          -2304,
           1536
         ],
         "id": "a10ec249-5d3f-4127-8ffa-1fecd5a9fb31",
@@ -6860,8 +6859,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -3152,
-          1776
+          -3200,
+          1824
         ],
         "id": "45c38bf5-6163-41af-9d15-4cbccd8f60ff",
         "name": "Extract User Record"
@@ -6875,8 +6874,8 @@
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1.4,
         "position": [
-          -2704,
-          2000
+          -2896,
+          2016
         ],
         "id": "bd8c690b-a79b-4564-b092-63e1774a8328",
         "name": "Respond - Auth Error"
@@ -6891,8 +6890,8 @@
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2.1,
         "position": [
-          -3952,
-          1872
+          -3984,
+          2000
         ],
         "id": "4c03a67a-1977-4f22-8217-18683b201d0a",
         "name": "POST /login1",
@@ -6906,7 +6905,7 @@
         "typeVersion": 2,
         "position": [
           -3760,
-          1872
+          2000
         ],
         "id": "e5650cd2-151f-4243-8f8f-60eae7944f81",
         "name": "Validate Credentials1"
@@ -6933,8 +6932,8 @@
         "type": "n8n-nodes-base.dataTable",
         "typeVersion": 1,
         "position": [
-          -3520,
-          1872
+          -3552,
+          2000
         ],
         "id": "2da597c1-5f92-41f3-b215-1eca40c0ecf0",
         "name": "Get User from DB1"
@@ -6967,8 +6966,8 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.2,
         "position": [
-          -3312,
-          1872
+          -3344,
+          2000
         ],
         "id": "5ec853fb-119a-4c72-a65d-c30f2554f353",
         "name": "User Exists?1"
@@ -6980,8 +6979,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -2784,
-          1776
+          -2832,
+          1824
         ],
         "id": "0519a95f-9a60-40e7-9a82-9f70dd7af635",
         "name": "Verify Password & Generate Token1"
@@ -6995,8 +6994,8 @@
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1.4,
         "position": [
-          -2592,
-          1776
+          -2640,
+          1824
         ],
         "id": "8636c6e5-dec9-4208-b070-437914a661dd",
         "name": "Respond Success1"
@@ -7010,8 +7009,8 @@
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1.4,
         "position": [
-          -2976,
-          2000
+          -3120,
+          2016
         ],
         "id": "e9a38b56-113d-4963-99d0-f29043ca8a39",
         "name": "Respond - User Not Found1"
@@ -8063,8 +8062,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -2976,
-          1776
+          -3008,
+          1824
         ],
         "id": "c5e99250-a75f-45f6-8736-c39e383c6ce8",
         "name": "Check Account Status"
@@ -8806,14 +8805,6 @@
         "name": "Sticky Note12"
       },
       {
-        "id": "comment_router_001",
-        "name": "Is Comment Event?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 2,
-        "position": [
-          -4400,
-          1760
-        ],
         "parameters": {
           "conditions": {
             "combinator": "and",
@@ -8835,27 +8826,34 @@
               "typeValidation": "loose",
               "version": 2
             }
-          }
-        }
+          },
+          "options": {}
+        },
+        "id": "comment_router_001",
+        "name": "Is Comment Event?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -2016,
+          2016
+        ]
       },
       {
+        "parameters": {
+          "method": "POST",
+          "url": "https://n8n-n8n.17m6co.easypanel.host/webhook/meta-comments",
+          "sendBody": true,
+          "specifyBody": "json",
+          "options": {}
+        },
         "id": "forward_to_comments_001",
         "name": "Forward to Comment Reply",
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.2,
         "position": [
-          -4160,
-          1660
+          -1728,
+          2000
         ],
-        "parameters": {
-          "body": "={{ $('Messenger Webhook1').first().json.body }}",
-          "contentType": "json",
-          "method": "POST",
-          "options": {},
-          "sendBody": true,
-          "specifyBody": "json",
-          "url": "https://n8n-n8n.17m6co.easypanel.host/webhook/meta-comments"
-        },
         "continueOnFail": true
       }
     ],
@@ -10159,24 +10157,16 @@
       }
     },
     "authors": "Ghassan Abdullah",
-    "name": null,
-    "description": null,
-    "autosaved": false,
+    "name": "Version 1da11b1d",
+    "description": "",
+    "autosaved": true,
     "workflowPublishHistory": [
       {
-        "createdAt": "2026-05-08T18:28:15.930Z",
-        "id": 574,
+        "createdAt": "2026-05-09T03:48:56.660Z",
+        "id": 578,
         "workflowId": "mLbs6nBXa2B21cF6L6_MG",
-        "versionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
+        "versionId": "1da11b1d-c0dd-4e93-aab7-2bee4537f8a1",
         "event": "activated",
-        "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
-      },
-      {
-        "createdAt": "2026-05-08T18:28:15.818Z",
-        "id": 573,
-        "workflowId": "mLbs6nBXa2B21cF6L6_MG",
-        "versionId": "e3a54c08-89bd-40ca-87e5-fdf798f797f9",
-        "event": "deactivated",
         "userId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
       }
     ]
