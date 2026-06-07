@@ -5051,6 +5051,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
+  "nodeGroups": [],
   "pinData": {
     "Webhook - Confirm Booking1": [
       {
@@ -10156,6 +10157,7 @@
         ]
       }
     },
+    "nodeGroups": [],
     "authors": "Ghassan Abdullah",
     "name": "Version 1da11b1d",
     "description": "",
