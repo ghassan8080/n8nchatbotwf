@@ -5100,6 +5100,7 @@
   "activeVersionId": "1da11b1d-c0dd-4e93-aab7-2bee4537f8a1",
   "versionCounter": 2067,
   "triggerCount": 13,
+  "sourceWorkflowId": null,
   "shared": [
     {
       "updatedAt": "2026-02-02T06:19:55.286Z",
@@ -5115,6 +5116,7 @@
         "type": "personal",
         "icon": null,
         "description": null,
+        "customTelemetryTags": [],
         "creatorId": "1728b87b-eb7f-46df-aaf1-492702e2a04b"
       }
     }
